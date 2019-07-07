@@ -1,1 +1,17 @@
-<p>login works!</p>
+<mat-card>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput type="text" placeholder="First name:" formControlName="userName" [value]="">
+      <mat-error *ngIf="userName.invalid && userName.errors.required">User name is required.</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Last name:" formControlName="password">
+      <mat-error *ngIf="password.invalid && password.errors.required">Password is required.</mat-error>
+    </mat-form-field>
+    <br>
+    <div>
+      <button mat-raised-button type="submit" [disabled]="!userForm.valid">Submit</button>
+    </div>
+  </form>
+</mat-card>
