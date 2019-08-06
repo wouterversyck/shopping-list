@@ -1,17 +1,22 @@
 <mat-card>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <input matInput type="text" placeholder="First name:" formControlName="userName" [value]="">
-      <mat-error *ngIf="userName.invalid && userName.errors.required">User name is required.</mat-error>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Last name:" formControlName="password">
-      <mat-error *ngIf="password.invalid && password.errors.required">Password is required.</mat-error>
-    </mat-form-field>
-    <br>
-    <div>
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput type="text" placeholder="First name:" formControlName="userName" [value]="">
+        <mat-error *ngIf="userName.invalid && userName.errors.required">User name is required.</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password:" formControlName="password">
+        <mat-error *ngIf="password.invalid && password.errors.required">Password is required.</mat-error>
+      </mat-form-field>
+      <mat-error *ngIf="showLoginError">Unable to login</mat-error>
+    </mat-card-content>
+    <mat-card-actions>
       <button mat-raised-button type="submit" [disabled]="!userForm.valid">Submit</button>
-    </div>
+    </mat-card-actions>
   </form>
 </mat-card>

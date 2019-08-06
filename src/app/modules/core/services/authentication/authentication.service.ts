@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthResponse } from './models/auth-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
 
@@ -16,15 +15,12 @@ export class AuthenticationService {
     formData.append('scope', 'write');
     formData.append('grant_type', 'client_credentials');
 
-    return this.http.post('/oauth/token', formData, {
-      headers: new HttpHeaders({
-        'Authorization': `Basic ${btoa(`${username}:${password}`)}`,
-      })
-    }).pipe(
-      tap(
-        (response: AuthResponse) => localStorage.setItem('access_token', response.access_token)
-      )
-    );
+    return this.http.post<Response>(`/api/login?username=${username}&password=${password}`, {}, {observe: 'response'})
+      .pipe(
+        tap(
+          response => localStorage.setItem('access_token', response.headers.get('X-Token'))
+        )
+      );
   }
 
   isLoggedIn() {

@@ -1,7 +1,18 @@
 <header>
-  <h1>
-    Title will come here
-  </h1>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <a mat-button [routerLink]="'/'">
+        <h1>
+          Shopping list
+        </h1>
+      </a>
+      <div *ngIf="isLoggedIn">
+        <a mat-button [routerLink]="'/list'">Shopping List</a>
+      </div>
+      <span class="fill-remaining-space"></span>
+      <button *ngIf="isLoggedIn" mat-raised-button (click)="logout()">Logout</button>
+    </mat-toolbar-row>
+  </mat-toolbar>
 </header>
 <main>
   <router-outlet></router-outlet>
