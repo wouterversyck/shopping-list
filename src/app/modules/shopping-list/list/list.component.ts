@@ -17,4 +17,8 @@ export class ListComponent implements OnInit {
       .subscribe((response: ShoppingList[]) => this.shoppingLists = response);
   }
 
+  selectShoppingList(id: number) {
+
+  }
+
 }

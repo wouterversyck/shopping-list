@@ -1,13 +1,12 @@
-<mat-card>
-  <p>list works!</p>
-  <div *ngFor="let list of shoppingLists">
-    <h2>{{list.name}}</h2>
-    <table>
-      <tr *ngFor="let listItem of list.items">
-        <td>{{listItem.name}}</td>
-      </tr>
-    </table>
-    <hr>
-    <br>
-  </div>
-</mat-card>
+<div class="card-wrapper">
+  <mat-card class="list-card" *ngFor="let list of shoppingLists" (click)="">
+    <mat-card-header>
+      <mat-card-title>{{list.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li *ngFor="let listItem of list.items">{{listItem.name}}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
