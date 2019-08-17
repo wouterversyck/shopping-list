@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
+import { LoginRequest } from '@core/services/authentication/models/loginRequest.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthenticationService {
     formData.append('scope', 'write');
     formData.append('grant_type', 'client_credentials');
 
-    return this.http.post<Response>(`/api/login?username=${username}&password=${password}`, {}, {observe: 'response'})
+    const loginRequest = new LoginRequest(username, password);
+    return this.http.post<Response>('/api/login', loginRequest, {observe: 'response'})
       .pipe(
         tap(
           response => localStorage.setItem('access_token', response.headers.get('X-Token'))
