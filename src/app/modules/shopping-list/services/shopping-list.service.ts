@@ -9,6 +9,6 @@ export class ShoppingListService {
   constructor(private httpClient: HttpClient) { }
 
   getShoppingList() {
-    return this.httpClient.get<ShoppingList[]>(this.SHOPPING_LIST_URL);
+    return this.httpClient.get<ShoppingList[]>(`${this.SHOPPING_LIST_URL}/all`);
   }
 }
