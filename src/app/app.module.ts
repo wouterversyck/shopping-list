@@ -22,11 +22,8 @@ import { JwtModule } from '@auth0/angular-jwt';
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: function  tokenGetter() {
-          return localStorage.getItem('access_token');
-        },
-        whitelistedDomains: ['localhost:4200'],
-        blacklistedRoutes: [/.*\/oauth\/.*/]
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:4200', 'woopsel.be', 'www.woopsel.be']
       }
     })
   ],
@@ -34,3 +31,7 @@ import { JwtModule } from '@auth0/angular-jwt';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
