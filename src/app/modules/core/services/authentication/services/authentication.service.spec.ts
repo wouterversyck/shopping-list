@@ -16,6 +16,6 @@ describe('AuthenticationService', () => {
   });
 
   it('todo should add test for login service', () => {
-    assert(false)
-  })
+    assert(false);
+  });
 });

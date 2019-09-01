@@ -4,7 +4,7 @@ import { ShoppingList } from '@app/modules/shopping-list/models/shopping-list.mo
 
 @Injectable()
 export class ShoppingListService {
-  private SHOPPING_LIST_URL = "api/shoppinglist";
+  private SHOPPING_LIST_URL = 'api/shoppinglist';
 
   constructor(private httpClient: HttpClient) { }
 

@@ -22,7 +22,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
+        tokenGetter,
         whitelistedDomains: ['localhost:4200', 'woopsel.be', 'www.woopsel.be']
       }
     })

@@ -36,6 +36,6 @@ describe('LoginComponent', () => {
   });
 
   it('todo should add test for form', () => {
-    assert(false)
-  })
+    assert(false);
+  });
 });

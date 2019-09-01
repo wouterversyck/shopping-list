@@ -30,10 +30,10 @@ export class LoginComponent implements OnInit {
   }
 
   get userName() {
-    return this.userForm.controls['userName'];
+    return this.userForm.controls.userName;
   }
 
   get password() {
-    return this.userForm.controls['password'];
+    return this.userForm.controls.password;
   }
 }

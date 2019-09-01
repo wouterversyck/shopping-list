@@ -3,5 +3,5 @@ import { ShoppingListItem } from '@app/modules/shopping-list/models/shopping-lis
 export class ShoppingList {
   id: number;
   name: string;
-  items: ShoppingListItem[]
+  items: ShoppingListItem[];
 }
