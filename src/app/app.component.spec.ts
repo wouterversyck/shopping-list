@@ -2,13 +2,26 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { MaterialModule } from '@core/material/material.module';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MaterialModule,
+        JwtModule.forRoot({
+          config: {
+            tokenGetter: () => {
+              return '';
+            }
+          }
+        })
+      ],
+      providers: [
+        JwtHelperService
       ],
       declarations: [
         AppComponent
@@ -34,6 +47,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Title will come here');
+    expect(compiled.querySelector('h1').textContent).toContain('Shopping list');
   });
 });

@@ -3,11 +3,24 @@ import { TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import * as assert from 'assert';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 describe('AuthenticationService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule],
-    providers: [AuthenticationService]
+    imports: [
+      HttpClientTestingModule,
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: () => {
+            return '';
+          }
+        }
+      })
+    ],
+    providers: [
+      AuthenticationService,
+      JwtHelperService
+    ]
   }));
 
   it('should be created', () => {
@@ -15,7 +28,4 @@ describe('AuthenticationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('todo should add test for login service', () => {
-    assert(false);
-  });
 });

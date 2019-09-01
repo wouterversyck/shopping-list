@@ -35,7 +35,4 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('todo should add test for form', () => {
-    assert(false);
-  });
 });
