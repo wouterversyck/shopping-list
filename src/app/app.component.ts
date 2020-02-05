@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from '@core/services/authentication/services/authentication.service';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'shopping-list';
-
+  env = environment;
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   logout() {

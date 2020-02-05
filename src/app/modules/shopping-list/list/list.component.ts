@@ -5,7 +5,7 @@ import { ShoppingList } from '@app/modules/shopping-list/models/shopping-list.mo
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.sass']
+  styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
   shoppingLists: ShoppingList[];
