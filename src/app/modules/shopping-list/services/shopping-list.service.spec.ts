@@ -2,8 +2,7 @@ import {inject, TestBed} from '@angular/core/testing';
 
 import { ShoppingListService } from './shopping-list.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import {ShoppingListItem} from "@app/modules/shopping-list/models/shopping-list-item.model";
-import {ShoppingList} from "@app/modules/shopping-list/models/shopping-list.model";
+import { ShoppingList } from '@app/modules/shopping-list/models/shopping-list.model';
 
 describe('ShoppingListService', () => {
   beforeEach(() => TestBed.configureTestingModule({

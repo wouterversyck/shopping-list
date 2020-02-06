@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,10 @@ import { MaterialModule } from '@core/material/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import * as assert from 'assert';
 import { By } from '@angular/platform-browser';
+import { AuthenticationService } from '@core/services/authentication/services/authentication.service';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -18,6 +22,7 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
+      providers: [ AuthenticationService ],
       imports: [
         CommonModule,
         AppModule,
@@ -59,4 +64,33 @@ describe('LoginComponent', () => {
     expect(loginBtn.disabled).toBeFalsy();
     expect(component.userForm.valid).toBeTruthy();
   });
+
+  it('should call onsubmit when login button is clicked', () => {
+    userName.value = 'john';
+    password.value = 'password';
+    userName.dispatchEvent(new Event('input'));
+    password.dispatchEvent(new Event('input'));
+
+    spyOn(component, 'onSubmit');
+
+    fixture.detectChanges();
+    loginBtn.click();
+
+    expect(component.onSubmit).toHaveBeenCalled();
+  });
+
+  it('should login with username and password and redirect when form is submitted',
+    inject([AuthenticationService, Router],
+      (authService: AuthenticationService, router: Router) => {
+    component.userForm.controls.userName.setValue('username');
+    component.userForm.controls.password.setValue('password');
+
+    spyOn(authService, 'login').and.returnValue(of(new HttpResponse()));
+    spyOn(router, 'navigate');
+
+    component.onSubmit();
+
+    expect(authService.login).toHaveBeenCalledWith('username', 'password');
+    expect(router.navigate).toHaveBeenCalledWith(['']);
+  }));
 });
