@@ -19,6 +19,9 @@ describe('LoginComponent', () => {
   let password: any;
   let loginBtn: any;
 
+  afterEach(() => {
+    fixture.destroy();
+  });
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],

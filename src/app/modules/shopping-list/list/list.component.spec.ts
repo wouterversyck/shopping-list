@@ -10,6 +10,9 @@ describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
 
+  afterEach(() => {
+    fixture.destroy();
+  });
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ListComponent ],

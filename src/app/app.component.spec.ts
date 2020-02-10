@@ -12,6 +12,9 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
+  afterEach(() => {
+    fixture.destroy();
+  });
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
