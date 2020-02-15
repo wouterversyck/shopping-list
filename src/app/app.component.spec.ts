@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { MaterialModule } from '@core/material/material.module';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { By } from '@angular/platform-browser';
-import { AuthenticationService } from '@core/services/authentication/services/authentication.service';
+import { AuthenticationService } from '@core/services/authentication/authentication.service';
 import { Router } from '@angular/router';
 
 describe('AppComponent', () => {

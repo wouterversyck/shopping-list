@@ -4,7 +4,7 @@ import { LoginGuard } from './login.guard';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
-import { AuthenticationService } from '@core/services/authentication/services/authentication.service';
+import { AuthenticationService } from '@core/services/authentication/authentication.service';
 import { Router } from '@angular/router';
 
 describe('LoginGuard', () => {

@@ -7,7 +7,7 @@ import { MaterialModule } from '@core/material/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import * as assert from 'assert';
 import { By } from '@angular/platform-browser';
-import { AuthenticationService } from '@core/services/authentication/services/authentication.service';
+import { AuthenticationService } from '@core/services/authentication/authentication.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
