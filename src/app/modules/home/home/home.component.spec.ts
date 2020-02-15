@@ -6,6 +6,9 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
+  afterEach(() => {
+    fixture.destroy();
+  });
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ]
