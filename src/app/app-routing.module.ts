@@ -19,6 +19,9 @@ const routes: Routes = [
     data: {
       authGuardRedirect: '/login'
     }
+  },
+  {
+    path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   }
 ];
 

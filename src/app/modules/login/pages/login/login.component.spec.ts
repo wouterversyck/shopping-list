@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
 import { MaterialModule } from '@core/material/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import * as assert from 'assert';
 import { By } from '@angular/platform-browser';
 import { AuthenticationService } from '@core/services/authentication/authentication.service';
 import { of } from 'rxjs';
