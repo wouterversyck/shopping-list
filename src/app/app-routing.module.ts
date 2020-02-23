@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginGuard } from '@core/guards/login/login.guard';
+import { AdminGuard } from '@core/guards/admin/admin.guard';
 
 const routes: Routes = [
   {
@@ -21,7 +22,11 @@ const routes: Routes = [
     }
   },
   {
-    path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+    path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [LoginGuard, AdminGuard],
+    data: {
+      authGuardRedirect: '/login'
+    }
   }
 ];
 

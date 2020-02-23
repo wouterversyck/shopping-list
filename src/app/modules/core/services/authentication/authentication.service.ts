@@ -29,6 +29,10 @@ export class AuthenticationService {
     return !this.jwtHelper.isTokenExpired();
   }
 
+  isAdmin() {
+    return this.jwtHelper.decodeToken(this.jwtHelper.tokenGetter()).roles == 'ADMIN';
+  }
+
   logout() {
     localStorage.removeItem('access_token');
   }

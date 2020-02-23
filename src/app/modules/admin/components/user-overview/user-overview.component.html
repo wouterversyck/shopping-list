@@ -2,7 +2,10 @@
   <mat-card-header>Users</mat-card-header>
   <mat-card-content>
     <table>
-      <tr *ngFor="let user of users">{{user.username}}</tr>
+      <tr *ngFor="let user of users">
+        <td>{{user.username}}</td>
+        <td><button (click)="sendActivationMail(user.id)">Send activation mail</button></td>
+      </tr>
     </table>
   </mat-card-content>
 </mat-card>

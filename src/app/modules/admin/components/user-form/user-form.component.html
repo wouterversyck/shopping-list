@@ -20,7 +20,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-error *ngIf="showError">Error occurred</mat-error>
+      <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button type="submit" [disabled]="!userForm.valid">Submit</button>
