@@ -31,7 +31,25 @@ export class UserFormComponent implements OnInit {
       .pipe(
         debounceTime(1000),
         flatMap(value => this.userService.emailExists(value))
-      ).subscribe((value) => console.log(value))
+      ).subscribe((result: boolean) => {
+        if (result) {
+          this.errorMessage = 'Email already exists';
+        } else {
+          this.errorMessage = null;
+        }
+    });
+
+    this.userForm.get("username").valueChanges
+      .pipe(
+        debounceTime(1000),
+        flatMap(value => this.userService.usernameExists(value))
+      ).subscribe((result: boolean) => {
+      if (result) {
+        this.errorMessage = 'Username already exists';
+      } else {
+        this.errorMessage = null;
+      }
+    })
   }
 
   onSubmit() {
@@ -41,9 +59,13 @@ export class UserFormComponent implements OnInit {
         (error: HttpErrorResponse) => this.handleError(error));
   }
 
+  showMessage(message: string) {
+    this.snackBar.open(message, 'Close', { duration: 5000 });
+  }
+
   private success() {
     this.reset();
-    this.snackBar.open('User created and mail sent', 'Close', {duration: 5000});
+    this.showMessage('User created and mail sent');
   }
 
   private reset() {
