@@ -30,7 +30,8 @@ export class AuthenticationService {
   }
 
   isAdmin() {
-    return this.jwtHelper.decodeToken(this.jwtHelper.tokenGetter()).roles == 'ADMIN';
+    const token = this.jwtHelper.decodeToken(this.jwtHelper.tokenGetter());
+    return token.roles.includes('ADMIN');
   }
 
   logout() {

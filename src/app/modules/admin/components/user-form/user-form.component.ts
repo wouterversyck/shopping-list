@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { UserService } from '@core/services/user/user.service';
 import { Role } from '@core/services/user/models/role.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { pipe } from 'rxjs';
-import { debounce, debounceTime, flatMap } from 'rxjs/operators';
+import { CustomValidators } from '@core/validators/custom.validator';
 
 @Component({
   selector: 'app-user-form',
@@ -14,9 +17,17 @@ import { debounce, debounceTime, flatMap } from 'rxjs/operators';
 })
 export class UserFormComponent implements OnInit {
   userForm = new FormGroup({
-    username: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    role: new FormControl('USER')
+    username: new FormControl('', {
+      updateOn: 'blur',
+      validators: [Validators.required],
+      asyncValidators: [CustomValidators.apiValidation('usernameExists', this.userService.usernameExists)]
+    }),
+    email: new FormControl('', {
+      updateOn: 'blur',
+      validators: [Validators.required, Validators.email],
+      asyncValidators: [CustomValidators.apiValidation('emailExists', this.userService.emailExists)]
+    }),
+    role: new FormControl('USER', Validators.required)
   });
 
   roles: Role[];
@@ -27,29 +38,6 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userForm.get("email").valueChanges
-      .pipe(
-        debounceTime(1000),
-        flatMap(value => this.userService.emailExists(value))
-      ).subscribe((result: boolean) => {
-        if (result) {
-          this.errorMessage = 'Email already exists';
-        } else {
-          this.errorMessage = null;
-        }
-    });
-
-    this.userForm.get("username").valueChanges
-      .pipe(
-        debounceTime(1000),
-        flatMap(value => this.userService.usernameExists(value))
-      ).subscribe((result: boolean) => {
-      if (result) {
-        this.errorMessage = 'Username already exists';
-      } else {
-        this.errorMessage = null;
-      }
-    })
   }
 
   onSubmit() {
@@ -70,15 +58,16 @@ export class UserFormComponent implements OnInit {
 
   private reset() {
     this.userForm.reset('');
+    this.userForm.markAsPristine();
     this.errorMessage = null;
   }
 
   private handleError(error: HttpErrorResponse) {
     this.errorMessage = null;
-    if(error.status === 207) {
-      this.errorMessage = "User created but mail sending failed";
+    if (error.status === 207) {
+      this.errorMessage = 'User created but mail sending failed';
     }
-    this.errorMessage = "An error occurred";
+    this.errorMessage = 'An error occurred';
   }
 
   get username() {

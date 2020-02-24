@@ -24,15 +24,15 @@ export class UserService {
     return this.http.get(this.rolesUrl);
   }
 
-  usernameExists(username: string) {
-    return this.http.get(`${this.usersUrl}exists?username=${username}`)
+  usernameExists = (username: string) => {
+    return this.http.get(`${this.usersUrl}exists?username=${username}`);
   }
 
-  emailExists(email: string) {
-    return this.http.get(`${this.usersUrl}exists?email=${email}`)
+  emailExists = (email: string) => {
+    return this.http.get(`${this.usersUrl}exists?email=${email}`);
   }
 
   sendActivationMail(id: number) {
-    return this.http.get(`${this.usersUrl}passwordSet/${id}`, {})
+    return this.http.get(`${this.usersUrl}passwordSet/${id}`);
   }
 }

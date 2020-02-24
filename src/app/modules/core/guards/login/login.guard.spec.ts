@@ -58,5 +58,5 @@ describe('LoginGuard', () => {
 
       expect(guard.canActivate(routeMock, routeStateMock)).toBeFalsy();
       expect(router.navigate).toHaveBeenCalledWith(['test']);
-    }));
+  }));
 });
