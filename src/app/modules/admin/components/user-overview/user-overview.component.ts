@@ -10,8 +10,6 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./user-overview.component.scss']
 })
 export class UserOverviewComponent implements OnInit {
-  pageEvent: PageEvent;
-
   users: UserPage = new UserPage();
   displayedColumns: string[] = ['username', 'email', 'role', 'sendPasswordMail', 'edit'];
 
