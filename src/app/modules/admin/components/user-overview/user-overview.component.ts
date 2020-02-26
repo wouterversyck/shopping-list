@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '@core/services/user/models/user.model';
 import { UserService } from '@core/services/user/user.service';
 import { UserPage } from '@core/services/user/models/UserPage.model';
 import { PageEvent } from '@angular/material/paginator';
