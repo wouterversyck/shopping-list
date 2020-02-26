@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [],
@@ -36,7 +37,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatAutocompleteModule,
     MatGridListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   exports: [
     MatMenuModule,
@@ -54,7 +56,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatAutocompleteModule,
     MatGridListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ]
 })
 export class MaterialModule { }
