@@ -12,8 +12,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(page: number = 0, size: number = 20) {
-    return this.http.get(`${this.usersUrl}?page=${page}/${size}`);
+  getUsers(page: number = 0, size: number = 25) {
+    return this.http.get(`${this.usersUrl}?page=${page}&size=${size}`);
   }
 
   addUser(user: User) {
