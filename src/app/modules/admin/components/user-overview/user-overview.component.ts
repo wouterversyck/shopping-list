@@ -21,7 +21,7 @@ export class UserOverviewComponent implements OnInit {
 
   getServerData(pageEvent: PageEvent) {
     this.userService.getUsers(pageEvent.pageIndex, pageEvent.pageSize)
-      .subscribe((users: UserPage) => this.users = users)
+      .subscribe((users: UserPage) => this.users = users);
   }
 
   sendActivationMail(id: number) {
