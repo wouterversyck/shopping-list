@@ -24,7 +24,7 @@ export class UserOverviewComponent implements OnInit {
       .subscribe((users: UserPage) => this.users = users);
   }
 
-  sendActivationMail(id: number) {
-    this.userService.sendActivationMail(id).subscribe();
+  sendPasswordSetMail(id: number) {
+    this.userService.sendPasswordSetMail(id).subscribe();
   }
 }

@@ -19,7 +19,8 @@
         <span class="mat-cell">{{user.role}}</span>
       </mat-expansion-panel-header>
       <div>
-        <button mat-raised-button>Send password mail</button>
+        <p>{{user.email}}</p>
+        <button mat-raised-button (click)="sendPasswordSetMail(user.id)">Send password mail</button>
         <button mat-icon-button>Edit</button>
       </div>
     </mat-expansion-panel>

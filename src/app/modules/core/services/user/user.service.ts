@@ -32,7 +32,7 @@ export class UserService {
     return this.http.get(`${this.usersUrl}exists?email=${email}`);
   }
 
-  sendActivationMail(id: number) {
+  sendPasswordSetMail(id: number) {
     return this.http.get(`${this.usersUrl}passwordSet/${id}`);
   }
 }
