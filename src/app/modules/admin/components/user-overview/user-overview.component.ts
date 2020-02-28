@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '@core/services/user/user.service';
 import { UserPage } from '@core/services/user/models/UserPage.model';
 import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { UserFormComponent } from '@app/modules/admin/components/dialogs/user-form/user-form.component';
+import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-user-overview',
@@ -10,13 +13,11 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class UserOverviewComponent implements OnInit {
   users: UserPage = new UserPage();
-  displayedColumns: string[] = ['username', 'email', 'role', 'sendPasswordMail', 'edit'];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private snackBar: SnackBarService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.userService.getUsers()
-      .subscribe((users: UserPage) => this.users = users);
+    this.getUsers();
   }
 
   getServerData(pageEvent: PageEvent) {
@@ -25,6 +26,22 @@ export class UserOverviewComponent implements OnInit {
   }
 
   sendPasswordSetMail(id: number) {
-    this.userService.sendPasswordSetMail(id).subscribe();
+    this.userService.sendPasswordSetMail(id).subscribe(
+      () => this.snackBar.showMessage('Email was sent to user'),
+      () => this.snackBar.showMessage('An error occurred while sending the email'));
   }
+
+  openAddUserDialog() {
+    const dialogRef = this.dialog.open(UserFormComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getUsers();
+    });
+  }
+
+  private getUsers() {
+    this.userService.getUsers()
+      .subscribe((users: UserPage) => this.users = users);
+  }
+
 }

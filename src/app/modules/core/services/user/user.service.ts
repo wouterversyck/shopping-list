@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { User } from '@core/services/user/models/user.model';
+import { Observable } from 'rxjs';
+import { Role } from '@core/services/user/models/role.model';
+import { UserPage } from '@core/services/user/models/UserPage.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +15,24 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(page: number = 0, size: number = 25) {
-    return this.http.get(`${this.usersUrl}?page=${page}&size=${size}`);
+  getUsers(page: number = 0, size: number = 25): Observable<UserPage> {
+    return this.http.get<UserPage>(`${this.usersUrl}?page=${page}&size=${size}`);
   }
 
-  addUser(user: User) {
-    return this.http.post(this.usersUrl, user);
+  addUser(user: User): Observable<HttpResponse<User>> {
+    return this.http.post<User>(this.usersUrl, user, { observe: 'response' });
   }
 
-  getRoles() {
-    return this.http.get(this.rolesUrl);
+  getRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(this.rolesUrl);
   }
 
-  usernameExists = (username: string) => {
-    return this.http.get(`${this.usersUrl}exists?username=${username}`);
+  usernameExists = (username: string): Observable<boolean> => {
+    return this.http.get<boolean>(`${this.usersUrl}exists?username=${username}`);
   }
 
-  emailExists = (email: string) => {
-    return this.http.get(`${this.usersUrl}exists?email=${email}`);
+  emailExists = (email: string): Observable<boolean> => {
+    return this.http.get<boolean>(`${this.usersUrl}exists?email=${email}`);
   }
 
   sendPasswordSetMail(id: number) {

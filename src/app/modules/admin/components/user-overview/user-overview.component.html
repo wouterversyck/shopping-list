@@ -11,17 +11,27 @@
     <section matSort class="mat-elevation-z2 mat-header-row">
       <span class="mat-header-cell">Username</span>
       <span class="mat-header-cell">Role</span>
+      <span class="mat-header-cell">
+        <button mat-icon-button (click)="openAddUserDialog()">
+          <mat-icon aria-label="add user">add</mat-icon>
+        </button>
+      </span>
     </section>
 
     <mat-expansion-panel *ngFor="let user of users.content">
       <mat-expansion-panel-header class="mat-row">
         <span class="mat-cell">{{user.username}}</span>
         <span class="mat-cell">{{user.role}}</span>
+        <span class="mat-cell"></span>
       </mat-expansion-panel-header>
       <div>
         <p>{{user.email}}</p>
-        <button mat-raised-button (click)="sendPasswordSetMail(user.id)">Send password mail</button>
-        <button mat-icon-button>Edit</button>
+        <button mat-icon-button (click)="sendPasswordSetMail(user.id)">
+          <mat-icon aria-label="send mail">mail</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon aria-label="edit">edit</mat-icon>
+        </button>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
 import { MaterialModule } from '@core/material/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('UserFormComponent', () => {
   let component: UserFormComponent;
@@ -17,7 +18,7 @@ describe('UserFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserFormComponent ],
-      providers: [ UserService ],
+      providers: [ UserService, MatDialogRef ],
       imports: [
         CommonModule,
         AppModule,

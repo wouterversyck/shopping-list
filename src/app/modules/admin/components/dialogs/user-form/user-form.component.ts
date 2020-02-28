@@ -6,9 +6,11 @@ import {
 } from '@angular/forms';
 import { UserService } from '@core/services/user/user.service';
 import { Role } from '@core/services/user/models/role.model';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { CustomValidators } from '@core/validators/custom.validator';
+import { MatDialogRef } from '@angular/material/dialog';
+import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
+import { User } from '@core/services/user/models/user.model';
 
 @Component({
   selector: 'app-user-form',
@@ -33,7 +35,7 @@ export class UserFormComponent implements OnInit {
   roles: Role[];
   errorMessage: string;
 
-  constructor(private userService: UserService, private snackBar: MatSnackBar) {
+  constructor(private userService: UserService, private snackBar: SnackBarService, public dialogRef: MatDialogRef<UserFormComponent>) {
     userService.getRoles().subscribe((roles: Role[]) => this.roles = roles);
   }
 
@@ -43,31 +45,28 @@ export class UserFormComponent implements OnInit {
   onSubmit() {
     this.userService.addUser(this.userForm.value)
       .subscribe(
-        () => this.success(),
+        (response: HttpResponse<User>) => this.success(response),
         (error: HttpErrorResponse) => this.handleError(error));
   }
 
-  showMessage(message: string) {
-    this.snackBar.open(message, 'Close', { duration: 5000 });
+  private success(response: HttpResponse<User>) {
+    this.reset();
+    if (response.status === 207) {
+      this.snackBar.showMessage('User created but mail sending failed');
+    } else {
+      this.snackBar.showMessage('User created and mail sent');
+    }
+    this.dialogRef.close();
   }
 
-  private success() {
-    this.reset();
-    this.showMessage('User created and mail sent');
+  private handleError(error: HttpErrorResponse) {
+    this.snackBar.showMessage('An error occurred while creating the user');
   }
 
   private reset() {
     this.userForm.reset('');
     this.userForm.markAsPristine();
     this.errorMessage = null;
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    this.errorMessage = null;
-    if (error.status === 207) {
-      this.errorMessage = 'User created but mail sending failed';
-    }
-    this.errorMessage = 'An error occurred';
   }
 
   get username() {
