@@ -41,5 +41,7 @@ describe('ShoppingListService', () => {
       expect(req.request.method).toEqual('GET');
       // Then we set the fake data to be returned by the mock
       req.flush(data);
+
+      httpMock.verify();
     }));
 });

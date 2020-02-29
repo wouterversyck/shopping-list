@@ -10,8 +10,8 @@ import { UserPage } from '@core/services/user/models/UserPage.model';
 })
 export class UserService {
   private adminEndpoint = '/api/admin/';
-  private usersUrl = `${this.adminEndpoint}users/`;
-  private rolesUrl = `${this.adminEndpoint}roles/`;
+  private usersUrl = `${this.adminEndpoint}users`;
+  private rolesUrl = `${this.adminEndpoint}roles`;
 
   constructor(private http: HttpClient) { }
 
@@ -28,14 +28,14 @@ export class UserService {
   }
 
   usernameExists = (username: string): Observable<boolean> => {
-    return this.http.get<boolean>(`${this.usersUrl}exists?username=${username}`);
+    return this.http.get<boolean>(`${this.usersUrl}/exists?username=${username}`);
   }
 
   emailExists = (email: string): Observable<boolean> => {
-    return this.http.get<boolean>(`${this.usersUrl}exists?email=${email}`);
+    return this.http.get<boolean>(`${this.usersUrl}/exists?email=${email}`);
   }
 
-  sendPasswordSetMail(id: number) {
-    return this.http.get(`${this.usersUrl}passwordSet/${id}`);
+  sendPasswordSetMail(id: number): Observable<void> {
+    return this.http.get<void>(`${this.usersUrl}/passwordSet/${id}`);
   }
 }

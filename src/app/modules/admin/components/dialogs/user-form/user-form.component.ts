@@ -29,7 +29,7 @@ export class UserFormComponent implements OnInit {
       validators: [Validators.required, Validators.email],
       asyncValidators: [CustomValidators.apiValidation('emailExists', this.userService.emailExists)]
     }),
-    role: new FormControl('USER', Validators.required)
+    role: new FormControl('', Validators.required)
   });
 
   roles: Role[];

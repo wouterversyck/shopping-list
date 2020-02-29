@@ -6,6 +6,10 @@ describe('EditUserComponent', () => {
   let component: EditUserComponent;
   let fixture: ComponentFixture<EditUserComponent>;
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditUserComponent ]
