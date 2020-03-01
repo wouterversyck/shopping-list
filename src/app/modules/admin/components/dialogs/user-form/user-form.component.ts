@@ -36,10 +36,10 @@ export class UserFormComponent implements OnInit {
   errorMessage: string;
 
   constructor(private userService: UserService, private snackBar: SnackBarService, public dialogRef: MatDialogRef<UserFormComponent>) {
-    userService.getRoles().subscribe((roles: Role[]) => this.roles = roles);
   }
 
   ngOnInit(): void {
+    this.userService.getRoles().subscribe((roles: Role[]) => this.roles = roles);
   }
 
   onSubmit() {
