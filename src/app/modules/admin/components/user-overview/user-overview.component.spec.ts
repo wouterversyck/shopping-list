@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
 import { MaterialModule } from '@core/material/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import {of} from "rxjs";
 
 describe('UserOverviewComponent', () => {
   let component: UserOverviewComponent;
@@ -15,9 +16,12 @@ describe('UserOverviewComponent', () => {
     fixture.destroy();
   });
   beforeEach(async(() => {
+    const mockUsersService = {
+      getUsers: () => of()
+    };
     TestBed.configureTestingModule({
       declarations: [ UserOverviewComponent ],
-      providers: [ UserService ],
+      providers: [ { provide: UserService, useValue: mockUsersService } ],
       imports: [
         CommonModule,
         AppModule,

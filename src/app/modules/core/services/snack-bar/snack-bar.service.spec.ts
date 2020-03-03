@@ -28,7 +28,8 @@ describe('SnackBarService', () => {
       service.showMessage('test');
 
       expect(snackBar.open).toHaveBeenCalledWith('test', 'Close', { duration: 5000});
-    }));
+    })
+  );
 
   it('should call snackBar service with custom params', inject([SnackBarService, MatSnackBar],
     (service: SnackBarService, snackBar: MatSnackBar) => {
@@ -37,5 +38,6 @@ describe('SnackBarService', () => {
       service.showMessage('test', 'action', { duration: 2000 });
 
       expect(snackBar.open).toHaveBeenCalledWith('test', 'action', { duration: 2000});
-    }));
+    })
+  );
 });

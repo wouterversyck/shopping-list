@@ -4,12 +4,12 @@ import { LoginComponent } from './login.component';
 import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
 import { MaterialModule } from '@core/material/material.module';
-import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { AuthenticationService } from '@core/services/authentication/authentication.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
+import createSpy = jasmine.createSpy;
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -24,13 +24,15 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      providers: [ AuthenticationService ],
+      providers: [
+        { provide: AuthenticationService, useValue: {} },
+        { provide: Router, useValue: {} }
+      ],
       imports: [
         CommonModule,
         AppModule,
         ReactiveFormsModule,
-        MaterialModule,
-        RouterTestingModule
+        MaterialModule
       ]
     })
     .compileComponents();
@@ -87,8 +89,8 @@ describe('LoginComponent', () => {
     component.userForm.controls.userName.setValue('username');
     component.userForm.controls.password.setValue('password');
 
-    spyOn(authService, 'login').and.returnValue(of(new HttpResponse()));
-    spyOn(router, 'navigate');
+    authService.login = createSpy().and.returnValue(of(new HttpResponse()));
+    router.navigate = createSpy();
 
     component.onSubmit();
 

@@ -17,7 +17,7 @@ describe('UsersComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UsersComponent ],
-      providers: [ UserService ],
+      providers: [ { provide: UserService, useValue: {} } ],
       imports: [
         CommonModule,
         AppModule,

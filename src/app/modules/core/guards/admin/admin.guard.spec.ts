@@ -2,13 +2,11 @@ import {inject, TestBed} from '@angular/core/testing';
 
 import { AdminGuard } from './admin.guard';
 import { AuthenticationService} from '@core/services/authentication/authentication.service';
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import createSpy = jasmine.createSpy;
 
 describe('AdminGuard', () => {
-  const routeMock: any = {
+  const activatedRouteSnapshotMock: any = {
     snapshot: {},
     data: {
       authGuardRedirect: 'test'
@@ -23,19 +21,8 @@ describe('AdminGuard', () => {
     TestBed.configureTestingModule({
       providers: [
         AdminGuard,
-        AuthenticationService,
-        JwtHelperService
-      ],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        JwtModule.forRoot({
-          config: {
-            tokenGetter: () => {
-              return '';
-            }
-          }
-        })
+        { provide: AuthenticationService, useValue: {} },
+        { provide: Router, useValue: {}}
       ]
     });
   });
@@ -43,18 +30,20 @@ describe('AdminGuard', () => {
   it('should return true when user has admin role',
     inject([AdminGuard, AuthenticationService],
     (guard: AdminGuard, authService: AuthenticationService) => {
-      spyOn(authService, 'isAdmin').and.returnValue(true);
+      authService.isAdmin = createSpy().and.returnValue(true);
 
-      expect(guard.canActivate(routeMock, routeStateMock)).toBeTruthy();
-  }));
+      expect(guard.canActivate(activatedRouteSnapshotMock, routeStateMock)).toBeTruthy();
+    })
+  );
 
   it('should return false and redirect when user does not have the admin role',
     inject([AdminGuard, AuthenticationService, Router],
       (guard: AdminGuard, authService: AuthenticationService, router: Router) => {
-      spyOn(authService, 'isAdmin').and.returnValue(false);
-      spyOn(router, 'navigate');
+        authService.isAdmin = createSpy().and.returnValue(false);
+        router.navigate = createSpy();
 
-      expect(guard.canActivate(routeMock, routeStateMock)).toBeFalsy();
-      expect(router.navigate).toHaveBeenCalledWith(['test']);
-  }));
+        expect(guard.canActivate(activatedRouteSnapshotMock, routeStateMock)).toBeFalsy();
+        expect(router.navigate).toHaveBeenCalledWith(['test']);
+    })
+  );
 });

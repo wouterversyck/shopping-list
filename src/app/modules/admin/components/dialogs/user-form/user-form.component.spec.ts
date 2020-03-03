@@ -5,11 +5,11 @@ import { UserService } from '@core/services/user/user.service';
 import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
 import { MaterialModule } from '@core/material/material.module';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
+import createSpy = jasmine.createSpy;
 
 describe('UserFormComponent', () => {
   let component: UserFormComponent;
@@ -19,31 +19,28 @@ describe('UserFormComponent', () => {
   const USERNAME = 'woopsel';
   const ROLE = 'ADMIN';
 
-  const userServiceStub = {
-    getUsers: () => {},
-    addUser: (user) => {},
-    getRoles: () => of([ { id: 1, name: 'ADMIN' }, { id: 2, name: 'USER' }]),
-    usernameExists: () => of(false),
-    emailExists: () => of(false)
-  };
-
   afterEach(() => {
     fixture.destroy();
   });
   beforeEach(async(() => {
+    const userService = {
+      getRoles: () => of([{ id: 1, name: 'ADMIN' }, { id: 2, name: 'USER' }]),
+      usernameExists: () => of(false),
+      emailExists: () => of(false)
+    };
+
     TestBed.configureTestingModule({
       declarations: [ UserFormComponent ],
       providers: [
-        { provide: UserService, useValue: userServiceStub},
-        SnackBarService,
+        { provide: UserService, useValue: userService},
+        { provide: SnackBarService, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: { close: () => {} } }
+        { provide: MatDialogRef, useValue: {} }
       ],
       imports: [
         CommonModule,
         AppModule,
-        MaterialModule,
-        RouterTestingModule
+        MaterialModule
       ]
     })
     .compileComponents();
@@ -55,47 +52,47 @@ describe('UserFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create',
-    inject([UserService, SnackBarService], (userService: UserService) => {
-      spyOn(userService, 'getRoles');
+  it('should create', () => {
       expect(component).toBeTruthy();
-    })
-  );
+  });
 
   it('should call userService and show proper message when user is added successfully',
-    inject([UserService, SnackBarService], (userService: UserService, snackBar: SnackBarService) => {
+    inject([UserService, SnackBarService, MatDialogRef, MatDialogRef],
+      (userService: UserService, snackBar: SnackBarService, matDialogRef: MatDialogRef<UserFormComponent>) => {
       setForm(component, USERNAME, EMAIL, ROLE);
-      spyOn(userService, 'getRoles');
-      spyOn(userService, 'addUser').and.returnValue(of(new HttpResponse()));
-      spyOn(snackBar, 'showMessage');
+      userService.addUser = createSpy().and.returnValue(of(new HttpResponse()));
+      snackBar.showMessage = createSpy();
+      matDialogRef.close = createSpy();
 
       component.onSubmit();
 
       expect(userService.addUser).toHaveBeenCalledWith({ username: USERNAME, email: EMAIL, role: ROLE });
       expect(snackBar.showMessage).toHaveBeenCalledWith('User created and mail sent');
+      expect(matDialogRef.close).toHaveBeenCalled();
     })
   );
 
   it('should call userService and show proper message when user is added but 207 is returned (email not sent)',
-    inject([UserService, SnackBarService], (userService: UserService, snackBar: SnackBarService) => {
+    inject([UserService, SnackBarService, MatDialogRef],
+      (userService: UserService, snackBar: SnackBarService, matDialogRef: MatDialogRef<UserFormComponent>) => {
       setForm(component, USERNAME, EMAIL, ROLE);
-      spyOn(userService, 'getRoles');
-      spyOn(userService, 'addUser').and.returnValue(of(new HttpResponse({ status: 207 })));
-      spyOn(snackBar, 'showMessage');
+      userService.addUser = createSpy().and.returnValue(of(new HttpResponse({ status: 207 })));
+      snackBar.showMessage = createSpy();
+      matDialogRef.close = createSpy();
 
       component.onSubmit();
 
       expect(userService.addUser).toHaveBeenCalledWith({ username: USERNAME, email: EMAIL, role: ROLE });
       expect(snackBar.showMessage).toHaveBeenCalledWith('User created but mail sending failed');
+      expect(matDialogRef.close).toHaveBeenCalled();
     })
   );
 
   it('should call userService and show proper message when user added but an error occurred',
     inject([UserService, SnackBarService], (userService: UserService, snackBar: SnackBarService) => {
       setForm(component, USERNAME, EMAIL, ROLE);
-      spyOn(userService, 'getRoles');
-      spyOn(userService, 'addUser').and.returnValue(throwError(new HttpResponse({ status: 500})));
-      spyOn(snackBar, 'showMessage');
+      userService.addUser = createSpy().and.returnValue(throwError(new HttpResponse({ status: 500})));
+      snackBar.showMessage = createSpy();
 
       component.onSubmit();
 

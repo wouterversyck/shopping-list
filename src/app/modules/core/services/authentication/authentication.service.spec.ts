@@ -5,22 +5,14 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { LoginRequest } from '@core/services/authentication/models/loginRequest.model';
+import createSpy = jasmine.createSpy;
 
 describe('AuthenticationService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      HttpClientTestingModule,
-      JwtModule.forRoot({
-        config: {
-          tokenGetter: () => {
-            return '';
-          }
-        }
-      })
-    ],
+    imports: [HttpClientTestingModule],
     providers: [
       AuthenticationService,
-      JwtHelperService
+      { provide: JwtHelperService, useValue: {} }
     ]
   }));
 
@@ -31,7 +23,7 @@ describe('AuthenticationService', () => {
 
   it('should return correct value and call jwtHelper when isLoggedIn is called', inject([AuthenticationService, JwtHelperService],
     (service: AuthenticationService, jwtHelperService: JwtHelperService) => {
-    spyOn(jwtHelperService, 'isTokenExpired').and.returnValue(false);
+    jwtHelperService.isTokenExpired = createSpy().and.returnValue(false);
 
     const result = service.isLoggedIn();
 
@@ -41,35 +33,40 @@ describe('AuthenticationService', () => {
 
   it('should return true when admin is logged in and isAdmin is called', inject([AuthenticationService, JwtHelperService],
     (service: AuthenticationService, jwtHelperService: JwtHelperService) => {
-    const token = {
-      roles: ['ADMIN']
-    };
+      const token = {
+        roles: ['ADMIN']
+      };
+      const tokenString = 'TOKEN';
+      jwtHelperService.decodeToken = createSpy().and.returnValue(token);
+      jwtHelperService.tokenGetter = createSpy().and.returnValue(tokenString);
 
-    spyOn(jwtHelperService, 'decodeToken').and.returnValue(token);
+      const result = service.isAdmin();
 
-    const result = service.isAdmin();
-
-    expect(result).toBeTruthy();
-    expect(jwtHelperService.decodeToken).toHaveBeenCalled();
-  }));
+      expect(result).toBeTruthy();
+      expect(jwtHelperService.decodeToken).toHaveBeenCalled();
+    })
+  );
 
   it('should return false when user is logged in and isAdmin is called', inject([AuthenticationService, JwtHelperService],
     (service: AuthenticationService, jwtHelperService: JwtHelperService) => {
       const token = {
         roles: ['USER']
       };
+      const tokenString = 'TOKEN';
 
-      spyOn(jwtHelperService, 'decodeToken').and.returnValue(token);
+      jwtHelperService.decodeToken = createSpy().and.returnValue(token);
+      jwtHelperService.tokenGetter = createSpy().and.returnValue(tokenString);
 
       const result = service.isAdmin();
 
       expect(result).toBeFalsy();
-      expect(jwtHelperService.decodeToken).toHaveBeenCalled();
-    }));
+      expect(jwtHelperService.decodeToken).toHaveBeenCalledWith(tokenString);
+      expect(jwtHelperService.tokenGetter).toHaveBeenCalled();
+    })
+  );
 
   it('should remove token when logout is called', inject([AuthenticationService],
     (service: AuthenticationService) => {
-
     spyOn(localStorage, 'removeItem');
 
     service.logout();
