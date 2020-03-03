@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
 import { MaterialModule } from '@core/material/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import {of} from "rxjs";
+import { of } from 'rxjs';
 
 describe('UserOverviewComponent', () => {
   let component: UserOverviewComponent;
