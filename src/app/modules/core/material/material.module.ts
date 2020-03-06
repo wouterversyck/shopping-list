@@ -18,6 +18,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [],
@@ -40,7 +42,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatGridListModule,
     MatSelectModule,
     MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSidenavModule,
+    MatDividerModule
   ],
   exports: [
     MatMenuModule,
@@ -60,7 +64,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatGridListModule,
     MatSelectModule,
     MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSidenavModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule { }

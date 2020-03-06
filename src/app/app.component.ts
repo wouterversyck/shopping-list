@@ -21,4 +21,8 @@ export class AppComponent {
   get isLoggedIn() {
     return this.authenticationService.isLoggedIn();
   }
+
+  get isAdmin() {
+    return this.authenticationService.isAdmin();
+  }
 }
