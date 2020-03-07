@@ -8,14 +8,9 @@
   <mat-divider></mat-divider>
 
   <mat-accordion displayMode="flat" multi class="mat-table">
-    <section matSort class="mat-elevation-z2 mat-header-row">
+    <section class="mat-elevation-z2 mat-header-row">
       <span class="mat-header-cell">Username</span>
       <span class="mat-header-cell">Role</span>
-      <span class="mat-header-cell">
-        <button mat-icon-button (click)="openAddUserDialog()">
-          <mat-icon aria-label="add user">add</mat-icon>
-        </button>
-      </span>
     </section>
 
     <mat-expansion-panel *ngFor="let user of users.content">
@@ -35,4 +30,8 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+
+  <button mat-fab (click)="openAddUserDialog()" class="float" color="primary">
+    <mat-icon aria-label="add user">add</mat-icon>
+  </button>
 </div>

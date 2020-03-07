@@ -50,3 +50,11 @@ $mat-row-horizontal-padding: 24px;
   overflow: hidden;
   word-wrap: break-word;
 }
+
+.float {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  z-index: 100;
+  background: #007bff;
+}
