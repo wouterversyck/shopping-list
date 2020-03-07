@@ -5,14 +5,17 @@
     </mat-card-header>
     <mat-card-content>
       <mat-form-field>
-        <input matInput type="text" placeholder="First name:" formControlName="userName" [value]="">
-        <mat-error *ngIf="userName.invalid && userName.errors.required">User name is required.</mat-error>
+        <mat-label>Username:</mat-label>
+        <input matInput type="text" formControlName="username" [value]="" required>
+        <mat-error *ngIf="username.invalid && username.errors.required">User name is required.</mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password:" formControlName="password">
+        <mat-label>Password:</mat-label>
+        <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" required>
         <mat-error *ngIf="password.invalid && password.errors.required">Password is required.</mat-error>
       </mat-form-field>
+      <mat-icon matSuffix (click)="showPassword = !showPassword">{{showPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
       <mat-error *ngIf="showLoginError">Unable to login</mat-error>
     </mat-card-content>
     <mat-card-actions>

@@ -10,10 +10,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   userForm = new FormGroup({
-    userName: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
   });
 
+  showPassword = false;
   showLoginError = false;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) { }
@@ -23,14 +24,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.showLoginError = false;
-    this.authenticationService.login(this.userName.value, this.password.value)
+    const username: string = (this.username.value as string).trim();
+    const password: string = (this.password.value as string).trim();
+    this.authenticationService.login(username, password)
       .subscribe(
         x => this.router.navigate(['']),
         error => this.showLoginError = true);
   }
 
-  get userName() {
-    return this.userForm.controls.userName;
+  get username() {
+    return this.userForm.controls.username;
   }
 
   get password() {

@@ -10,6 +10,9 @@ import { MaterialModule } from '@core/material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { FooterComponent } from './modules/shared/layouts/footer/footer.component';
+import { HeaderComponent } from './modules/shared/layouts/header/header.component';
+import { NavigationComponent } from './modules/shared/layouts/navigation/navigation.component';
 
 Sentry.init({
   dsn: 'https://9e944a3c0ca8449cb93b48ecf876aa2e@sentry.io/3227290'
@@ -26,7 +29,10 @@ export class SentryErrorHandler implements ErrorHandler {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FooterComponent,
+    HeaderComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

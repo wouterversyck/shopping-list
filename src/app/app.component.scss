@@ -8,18 +8,6 @@
   min-height: 100vh; // same height as browser window height
 }
 
-header img {
-  margin-left: 25px;
-}
-
 main {
   flex: 1; // child will set to an equal size inside the container
-}
-
-.fill-remaining-space {
-  flex: 1 1 auto;
-}
-
-.mat-icon {
-  cursor: pointer;
 }

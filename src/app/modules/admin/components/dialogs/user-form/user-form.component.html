@@ -1,19 +1,21 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input matInput type="text" placeholder="First name:" formControlName="username">
+    <mat-label>Username:</mat-label>
+    <input matInput type="text" formControlName="username" required>
     <mat-error *ngIf="username.invalid && username.errors.required">User name is required.</mat-error>
     <mat-error *ngIf="username.invalid && username.errors.usernameExists">User name already exists.</mat-error>
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput type="email" placeholder="Email:" formControlName="email">
+    <mat-label>Email:</mat-label>
+    <input matInput type="email" formControlName="email" required>
     <mat-error *ngIf="email.invalid && email.errors.required">Email is required.</mat-error>
     <mat-error *ngIf="email.invalid && email.errors.emailExists">Email already exists.</mat-error>
   </mat-form-field>
   <br>
   <mat-form-field>
     <mat-label>Role</mat-label>
-    <mat-select formControlName="role">
+    <mat-select formControlName="role" required>
       <mat-option *ngFor="let role of roles" [value]="role.name">
         {{role.name}}
       </mat-option>

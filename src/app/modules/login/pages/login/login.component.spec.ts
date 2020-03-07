@@ -14,7 +14,7 @@ import createSpy = jasmine.createSpy;
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let userName: any;
+  let username: any;
   let password: any;
   let loginBtn: any;
 
@@ -43,7 +43,7 @@ describe('LoginComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    userName = fixture.debugElement.query(By.css('[formcontrolname=userName]')).nativeElement;
+    username = fixture.debugElement.query(By.css('[formcontrolname=username]')).nativeElement;
     password = fixture.debugElement.query(By.css('[formcontrolname=password]')).nativeElement;
     loginBtn = fixture.debugElement.query(By.css('button[type=submit]')).nativeElement;
   });
@@ -58,9 +58,9 @@ describe('LoginComponent', () => {
   });
 
   it('should have an valid form and enabled loginButton when username and password are entered', () => {
-    userName.value = 'john';
+    username.value = 'john';
     password.value = 'password';
-    userName.dispatchEvent(new Event('input'));
+    username.dispatchEvent(new Event('input'));
     password.dispatchEvent(new Event('input'));
 
     fixture.detectChanges();
@@ -70,9 +70,9 @@ describe('LoginComponent', () => {
   });
 
   it('should call onsubmit when login button is clicked', () => {
-    userName.value = 'john';
+    username.value = 'john';
     password.value = 'password';
-    userName.dispatchEvent(new Event('input'));
+    username.dispatchEvent(new Event('input'));
     password.dispatchEvent(new Event('input'));
 
     spyOn(component, 'onSubmit');
@@ -86,7 +86,7 @@ describe('LoginComponent', () => {
   it('should login with username and password and redirect when form is submitted',
     inject([AuthenticationService, Router],
       (authService: AuthenticationService, router: Router) => {
-    component.userForm.controls.userName.setValue('username');
+    component.userForm.controls.username.setValue('username');
     component.userForm.controls.password.setValue('password');
 
     authService.login = createSpy().and.returnValue(of(new HttpResponse()));
