@@ -13,6 +13,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { FooterComponent } from './modules/shared/layouts/footer/footer.component';
 import { HeaderComponent } from './modules/shared/layouts/header/header.component';
 import { NavigationComponent } from './modules/shared/layouts/navigation/navigation.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 Sentry.init({
   dsn: 'https://9e944a3c0ca8449cb93b48ecf876aa2e@sentry.io/3227290'
@@ -46,7 +48,8 @@ export class SentryErrorHandler implements ErrorHandler {
         tokenGetter,
         whitelistedDomains: ['localhost:4200', 'woopsel.be', 'www.woopsel.be']
       }
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [{ provide: ErrorHandler, useClass: SentryErrorHandler }],
   bootstrap: [AppComponent]
