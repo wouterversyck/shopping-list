@@ -119,6 +119,9 @@ function createUserPage(): UserPage {
       id: 1,
       role: 'USER'
     }],
+    first: true,
+    last: false,
+    number: 0,
     totalPages: 2,
     size: 2,
     totalElements: 4

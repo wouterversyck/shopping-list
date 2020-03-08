@@ -2,7 +2,7 @@
   <mat-paginator [length]="users.totalElements"
                  [pageSize]="users.size"
                  [pageSizeOptions]="[5, 10, 25, 100]"
-                 (page)="getServerData($event)">
+                 (page)="getUsersByPageEvent($event)">
   </mat-paginator>
 
   <mat-divider></mat-divider>
@@ -30,7 +30,7 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <button mat-fab (click)="openAddUserDialog()" class="float" color="primary">
+  <button mat-fab (click)="openAddUserDialog()" class="float mat-elevation-z15" color="primary">
     <mat-icon aria-label="add user">add</mat-icon>
   </button>
 </div>

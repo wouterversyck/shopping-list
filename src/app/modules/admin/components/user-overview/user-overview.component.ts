@@ -20,9 +20,13 @@ export class UserOverviewComponent implements OnInit {
     this.getUsers();
   }
 
-  getServerData(pageEvent: PageEvent) {
-    this.userService.getUsers(pageEvent.pageIndex, pageEvent.pageSize)
+  getUsers(pageNumber: number = 0, size: number = 25) {
+    this.userService.getUsers(pageNumber, size)
       .subscribe((users: UserPage) => this.users = users);
+  }
+
+  getUsersByPageEvent(pageEvent: PageEvent) {
+    this.getUsers(pageEvent.pageIndex, pageEvent.pageSize);
   }
 
   sendPasswordSetMail(id: number) {
@@ -35,13 +39,8 @@ export class UserOverviewComponent implements OnInit {
     const dialogRef = this.dialog.open(UserFormComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getUsers();
+      this.getUsers(this.users.number, this.users.size);
     });
-  }
-
-  private getUsers() {
-    this.userService.getUsers()
-      .subscribe((users: UserPage) => this.users = users);
   }
 
 }

@@ -5,4 +5,7 @@ export class UserPage {
   totalPages: number;
   size: number;
   totalElements: number;
+  number: number;
+  first: boolean;
+  last: boolean;
 }
