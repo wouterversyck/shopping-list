@@ -1,5 +1,5 @@
 <mat-card>
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="userForm">
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
@@ -19,7 +19,12 @@
       <mat-error *ngIf="showLoginError">Unable to login</mat-error>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button type="submit" [disabled]="!userForm.valid">Submit</button>
+      <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="!userForm.valid">Submit</button>
     </mat-card-actions>
+    <mat-divider></mat-divider>
   </form>
+  <mat-card-actions>
+    <button mat-raised-button *ngIf="user == null" (click)="signInWithGoogle()">Login with Google</button>
+    <button mat-raised-button *ngIf=user (click)="continueLoginWithUser()">Login with {{user.email}}</button>
+  </mat-card-actions>
 </mat-card>

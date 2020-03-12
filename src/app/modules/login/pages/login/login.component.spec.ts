@@ -10,6 +10,7 @@ import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import createSpy = jasmine.createSpy;
+import { AuthService } from 'angularx-social-login';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -25,8 +26,9 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       providers: [
-        { provide: AuthenticationService, useValue: {} },
-        { provide: Router, useValue: {} }
+        { provide: AuthenticationService, useValue: { isLoggedIn: () => false } },
+        { provide: Router, useValue: { } },
+        { provide: AuthService, useValue: { authState: of({ idToken: '' }) } }
       ],
       imports: [
         CommonModule,
