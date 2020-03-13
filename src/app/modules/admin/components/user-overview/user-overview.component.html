@@ -1,6 +1,6 @@
 <div class="user-overview-container mat-elevation-z8">
-  <mat-paginator [length]="users.totalElements"
-                 [pageSize]="users.size"
+  <mat-paginator [length]="(userPageSubject | async).totalElements"
+                 [pageSize]="(userPageSubject | async).size"
                  [pageSizeOptions]="[5, 10, 25, 100]"
                  (page)="getUsersByPageEvent($event)">
   </mat-paginator>
@@ -13,7 +13,7 @@
       <span class="mat-header-cell">Role</span>
     </section>
 
-    <mat-expansion-panel *ngFor="let user of users.content">
+    <mat-expansion-panel *ngFor="let user of (userPageSubject | async).content">
       <mat-expansion-panel-header class="mat-row">
         <span class="mat-cell">{{user.username}}</span>
         <span class="mat-cell">{{user.role}}</span>

@@ -1,5 +1,5 @@
 <div class="card-wrapper">
-  <mat-card class="list-card" *ngFor="let list of shoppingLists" >
+  <mat-card class="list-card" *ngFor="let list of shoppingLists | async" >
     <mat-card-header>
       <mat-card-title>{{list.name}}</mat-card-title>
     </mat-card-header>
