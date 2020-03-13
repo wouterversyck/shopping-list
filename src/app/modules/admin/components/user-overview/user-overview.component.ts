@@ -5,8 +5,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from '@app/modules/admin/components/dialogs/user-form/user-form.component';
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from "@core/services/user/models/user.model";
+import { BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-user-overview',
