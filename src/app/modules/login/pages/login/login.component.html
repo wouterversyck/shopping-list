@@ -1,30 +1,10 @@
-<mat-card>
-  <form [formGroup]="userForm">
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-form-field>
-        <mat-label>Username:</mat-label>
-        <input matInput type="text" formControlName="username" [value]="" required>
-        <mat-error *ngIf="username.invalid && username.errors.required">User name is required.</mat-error>
-      </mat-form-field>
-      <br>
-      <mat-form-field>
-        <mat-label>Password:</mat-label>
-        <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" required>
-        <mat-error *ngIf="password.invalid && password.errors.required">Password is required.</mat-error>
-      </mat-form-field>
-      <mat-icon matSuffix (click)="showPassword = !showPassword">{{showPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-      <mat-error *ngIf="showLoginError">Unable to login</mat-error>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="!userForm.valid">Submit</button>
-    </mat-card-actions>
-    <mat-divider></mat-divider>
-  </form>
+<mat-card class="login-card">
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-content>
+    <app-login-form></app-login-form>
+  </mat-card-content>
+  <mat-divider></mat-divider>
   <mat-card-actions>
-    <button mat-raised-button *ngIf="user == null" (click)="signInWithGoogle()">Login with Google</button>
-    <button mat-raised-button *ngIf=user (click)="continueLoginWithUser()">Login with {{user.email}}</button>
+    <app-social-login></app-social-login>
   </mat-card-actions>
 </mat-card>
