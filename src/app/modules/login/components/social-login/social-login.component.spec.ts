@@ -27,10 +27,10 @@ describe('SocialLoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SocialLoginComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

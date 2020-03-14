@@ -14,7 +14,11 @@ import { first } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private authenticationService: AuthenticationService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authenticationService.isLoggedIn()) {
+      this.router.navigate(['']);
+    }
+  }
 }
