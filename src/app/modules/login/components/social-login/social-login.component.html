@@ -1,11 +1,11 @@
 <div *ngIf=userSubject.getValue()>
-  <button mat-button mat-raised-button class="button-social" (click)="continueLoginWithUser()">
+  <button (click)="continueLoginWithUser()" mat-button mat-raised-button class="button-social">
     <img style="vertical-align:middle" src="{{(userSubject | async).photoUrl}}" width="50px" alt="login with Google">
     Continue as {{(userSubject | async).name}}
   </button>
 </div>
 <div *ngIf=!userSubject.getValue()>
-  <button mat-button mat-raised-button class="button-social" (click)="signInWithGoogle()">
+  <button (click)="signInWithGoogle()" mat-button mat-raised-button class="button-social">
     <img style="vertical-align:middle" src="/assets/google.svg" width="50px" alt="login with Google">
     Login With Google
   </button>

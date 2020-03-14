@@ -13,6 +13,6 @@
   </mat-form-field>
   <mat-error *ngIf="showLoginError">Unable to login</mat-error>
   <div class="button">
-    <button mat-button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="!userForm.valid">Submit</button>
+    <button (click)="onSubmit()" [disabled]="!userForm.valid" color="accent" class="A400" mat-button mat-raised-button type="submit">Submit</button>
   </div>
 </form>
