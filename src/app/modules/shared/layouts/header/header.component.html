@@ -14,7 +14,9 @@
         </button>
         <mat-divider></mat-divider>
         <button mat-menu-item>Edit profile</button>
-        <mat-slide-toggle color="accent" (change)="toggleTheme()" [checked]="isDarTheme">Dark theme</mat-slide-toggle>
+        <span mat-menu-item>
+          <mat-slide-toggle  color="accent" (change)="toggleTheme()" [checked]="isDarTheme">Dark theme</mat-slide-toggle>
+        </span>
       </mat-menu>
     </mat-toolbar-row>
   </mat-toolbar>
