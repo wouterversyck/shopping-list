@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from '@app/modules/admin/components/dialogs/user-form/user-form.component';
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 import { BehaviorSubject} from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-overview',
@@ -21,7 +22,7 @@ export class UserOverviewComponent implements OnInit {
     this.getUsers();
   }
 
-  getUsers(pageNumber: number = 0, size: number = 25) {
+  getUsers(pageNumber: number = 0, size: number = 10) {
     this.userService.getUsers(pageNumber, size).subscribe(element => this.userPageSubject.next(element));
   }
 
@@ -35,6 +36,15 @@ export class UserOverviewComponent implements OnInit {
       () => this.snackBar.showMessage('An error occurred while sending the email'));
   }
 
+  deleteUser(id: number, username: string) {
+    if (confirm(`Delete user ${username}`)) {
+      this.userService.deleteUser(id).subscribe(
+        success => this.getUsers(this.userPageSubject.getValue().number, this.userPageSubject.getValue().size),
+        error => this.handleError(error)
+      );
+    }
+  }
+
   openAddUserDialog() {
     const dialogRef = this.dialog.open(UserFormComponent);
 
@@ -43,4 +53,11 @@ export class UserOverviewComponent implements OnInit {
     });
   }
 
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 409) {
+      this.snackBar.showMessage('You cannot delete the user you are logged in with');
+    } else {
+      this.snackBar.showMessage('Something went wrong while deleting user');
+    }
+  }
 }

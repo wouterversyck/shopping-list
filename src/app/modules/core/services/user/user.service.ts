@@ -23,6 +23,10 @@ export class UserService {
     return this.http.post<User>(this.usersUrl, user, { observe: 'response' });
   }
 
+  deleteUser(id: number): Observable<HttpResponse<object>> {
+    return this.http.delete(`${this.usersUrl}/${id}`, { observe: 'response' });
+  }
+
   getRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(this.rolesUrl);
   }

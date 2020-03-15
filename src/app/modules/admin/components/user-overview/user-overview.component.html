@@ -1,7 +1,7 @@
 <div class="user-overview-container mat-elevation-z8">
   <mat-paginator [length]="(userPageSubject | async).totalElements"
                  [pageSize]="(userPageSubject | async).size"
-                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 [pageSizeOptions]="[5, 10, 25, 50]"
                  (page)="getUsersByPageEvent($event)">
   </mat-paginator>
 
@@ -25,6 +25,9 @@
         </button>
         <button mat-icon-button>
           <mat-icon aria-label="edit">edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteUser(user.id, user.username)">
+          <mat-icon aria-label="delete">delete</mat-icon>
         </button>
       </div>
     </mat-expansion-panel>
