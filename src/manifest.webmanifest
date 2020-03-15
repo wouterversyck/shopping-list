@@ -1,7 +1,7 @@
 {
   "name": "Marcus",
   "short_name": "Marcus",
-  "theme_color": "#0a0a0a",
+  "theme_color": "#000",
   "background_color": "#f56042",
   "display": "standalone",
   "scope": "./",
