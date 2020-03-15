@@ -20,6 +20,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [],
@@ -44,7 +45,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatExpansionModule,
     MatDialogModule,
     MatSidenavModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatMenuModule,
@@ -66,7 +68,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatExpansionModule,
     MatDialogModule,
     MatSidenavModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }

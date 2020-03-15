@@ -31,6 +31,19 @@ describe('AuthenticationService', () => {
     expect(jwtHelperService.isTokenExpired).toHaveBeenCalled();
   }));
 
+  it('should remove token when user is not logged in', inject([AuthenticationService, JwtHelperService],
+    (service: AuthenticationService, jwtHelperService: JwtHelperService) => {
+      jwtHelperService.isTokenExpired = createSpy().and.returnValue(true);
+      spyOn(localStorage, 'removeItem');
+
+      const result = service.isLoggedIn();
+
+      expect(result).toBeFalsy();
+      expect(jwtHelperService.isTokenExpired).toHaveBeenCalled();
+      expect(localStorage.removeItem).toHaveBeenCalled();
+    })
+  );
+
   it('should return true when admin is logged in and isAdmin is called', inject([AuthenticationService, JwtHelperService],
     (service: AuthenticationService, jwtHelperService: JwtHelperService) => {
       const token = {

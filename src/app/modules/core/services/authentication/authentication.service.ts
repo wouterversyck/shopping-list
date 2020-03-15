@@ -23,7 +23,11 @@ export class AuthenticationService {
   }
 
   isLoggedIn() {
-    return !this.jwtHelper.isTokenExpired();
+    if (this.jwtHelper.isTokenExpired()) {
+      this.logout();
+      return false;
+    }
+    return true;
   }
 
   isAdmin() {
