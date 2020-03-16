@@ -1,7 +1,8 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -12,6 +13,7 @@ describe('AppComponent', () => {
   });
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         MaterialModule,
         NoopAnimationsModule

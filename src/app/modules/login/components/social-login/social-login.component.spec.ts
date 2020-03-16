@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'angularx-social-login';
 import { of } from 'rxjs';
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('SocialLoginComponent', () => {
   let component: SocialLoginComponent;
@@ -14,6 +15,7 @@ describe('SocialLoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SocialLoginComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: AuthenticationService, useValue: { isLoggedIn: () => false } },
         { provide: Router, useValue: { } },

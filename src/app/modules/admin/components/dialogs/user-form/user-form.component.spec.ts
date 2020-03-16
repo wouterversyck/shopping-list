@@ -4,7 +4,7 @@ import { UserFormComponent } from './user-form.component';
 import { UserService } from '@core/services/user/user.service';
 import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@app/modules/material/material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';

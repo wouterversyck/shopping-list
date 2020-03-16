@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ShoppingListRoutingModule } from './shopping-list-routing.module';
 import { ListComponent } from './pages/list/list.component';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@core/../material/material.module';
 import { ShoppingListService } from '@app/modules/shopping-list/services/shopping-list.service';
 
 @NgModule({

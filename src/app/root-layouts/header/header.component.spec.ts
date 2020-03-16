@@ -5,8 +5,9 @@ import { AuthenticationService } from '@core/services/authentication/authenticat
 import { By } from '@angular/platform-browser';
 import createSpy = jasmine.createSpy;
 import { Router } from '@angular/router';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -18,6 +19,7 @@ describe('HeaderComponent', () => {
         MaterialModule,
         NoopAnimationsModule
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: AuthenticationService, useValue: { isLoggedIn: () => true } },
         { provide: Router, useValue: {}}

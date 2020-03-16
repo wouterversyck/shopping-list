@@ -6,13 +6,13 @@ import { ErrorHandler } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from './modules/material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
-import { FooterComponent } from './modules/shared/layouts/footer/footer.component';
-import { HeaderComponent } from './modules/shared/layouts/header/header.component';
-import { NavigationComponent } from './modules/shared/layouts/navigation/navigation.component';
+import { FooterComponent } from './root-layouts/footer/footer.component';
+import { HeaderComponent } from './root-layouts/header/header.component';
+import { NavigationComponent } from './root-layouts/navigation/navigation.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 

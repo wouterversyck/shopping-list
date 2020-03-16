@@ -11,6 +11,7 @@ import { CustomValidators } from '@core/validators/custom.validator';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 import { User } from '@core/services/user/models/user.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-form',
@@ -32,14 +33,14 @@ export class UserFormComponent implements OnInit {
     role: new FormControl('', Validators.required)
   });
 
-  roles: Role[];
+  roles: Observable<Role[]>;
   errorMessage: string;
 
-  constructor(private userService: UserService, private snackBar: SnackBarService, public dialogRef: MatDialogRef<UserFormComponent>) {
+  constructor(private userService: UserService, private snackBar: SnackBarService, private dialogRef: MatDialogRef<UserFormComponent>) {
   }
 
   ngOnInit(): void {
-    this.userService.getRoles().subscribe((roles: Role[]) => this.roles = roles);
+    this.roles = this.userService.getRoles();
   }
 
   onSubmit() {

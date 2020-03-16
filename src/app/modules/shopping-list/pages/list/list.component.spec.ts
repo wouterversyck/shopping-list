@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@app/modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
 import { ShoppingListService } from '@app/modules/shopping-list/services/shopping-list.service';

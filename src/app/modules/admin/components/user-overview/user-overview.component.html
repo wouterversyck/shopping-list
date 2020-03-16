@@ -20,7 +20,7 @@
       </mat-expansion-panel-header>
       <div>
         <p>{{user.email}}</p>
-        <button mat-icon-button (click)="sendPasswordSetMail(user.id)">
+        <button mat-icon-button (click)="sendPasswordSetMail(user.id, user.username)">
           <mat-icon aria-label="send mail">mail</mat-icon>
         </button>
         <button mat-icon-button>

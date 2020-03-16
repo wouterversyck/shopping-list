@@ -2,7 +2,7 @@ import { inject, TestBed } from '@angular/core/testing';
 
 import { SnackBarService } from './snack-bar.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@app/modules/material/material.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 describe('SnackBarService', () => {

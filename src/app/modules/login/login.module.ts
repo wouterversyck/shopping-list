@@ -7,9 +7,9 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@core/material/material.module';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { SocialLoginComponent } from './components/social-login/social-login.component';
+import { MaterialModule } from '@app/modules/material/material.module';
 
 const config = new AuthServiceConfig([
   {

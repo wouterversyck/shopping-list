@@ -13,7 +13,6 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
     const loginRequest = new LoginRequest(username, password);
-    console.log('test');
     return this.http.post<Response>('/api/login', loginRequest, { observe: 'response' })
       .pipe(
         tap(

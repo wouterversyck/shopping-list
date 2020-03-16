@@ -4,7 +4,7 @@ import { UserOverviewComponent } from './user-overview.component';
 import { UserService } from '@core/services/user/user.service';
 import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@app/modules/material/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
