@@ -22,7 +22,7 @@ export class PasswordSetComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.token = params['token'];
+      this.token = params.token;
     });
   }
 

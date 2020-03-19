@@ -14,7 +14,7 @@ describe('PasswordSetComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PasswordSetComponent ],
       providers: [
-        { provide: ActivatedRoute, useValue: {queryParams: of({'token': 'token'})} },
+        { provide: ActivatedRoute, useValue: { queryParams: of({token: 'token'}) } },
         { provide: ProfileService, useValue: {} }
       ]
     })

@@ -3,19 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { PasswordSetComponent } from './password-set/password-set.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '@app/modules/material/material.module';
 
 
 @NgModule({
   declarations: [PasswordSetComponent],
   imports: [
     CommonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
+    MaterialModule,
     ReactiveFormsModule,
     ProfileRoutingModule
   ]
