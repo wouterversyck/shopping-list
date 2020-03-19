@@ -27,6 +27,9 @@ const routes: Routes = [
     data: {
       authGuardRedirect: '/login'
     }
+  },
+  {
+    path: 'profile', loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
   }
 ];
 
