@@ -2,9 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PasswordSetComponent } from './password-set.component';
 import { provideConfig } from '@login/login.module';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { ProfileService } from '@core/services/user/profile.service';
+import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 
 describe('PasswordSetComponent', () => {
   let component: PasswordSetComponent;
@@ -15,7 +16,9 @@ describe('PasswordSetComponent', () => {
       declarations: [ PasswordSetComponent ],
       providers: [
         { provide: ActivatedRoute, useValue: { queryParams: of({token: 'token'}) } },
-        { provide: ProfileService, useValue: {} }
+        { provide: ProfileService, useValue: {} },
+        { provide: SnackBarService, useValue: {} },
+        { provide: Router, useValue: {} }
       ]
     })
     .compileComponents();

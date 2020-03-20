@@ -1,5 +1,4 @@
 export class PasswordSet {
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  password: string;
+  token: string;
 }

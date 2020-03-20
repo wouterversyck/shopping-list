@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { map } from 'rxjs/operators';
 
 export class CustomValidators {
@@ -9,5 +9,14 @@ export class CustomValidators {
         map(response => response ? { [key]: true } : null)
       );
     };
+  }
+
+  static passwordsMatchValidation(firstInput: string, secondInput: string): ValidatorFn {
+    return (group: FormGroup): ValidationErrors | null => {
+      const password = group.get(firstInput).value;
+      const confirmPass = group.get(secondInput).value;
+
+      return password === confirmPass ? null : { passwordsDoNotMatch: true };
+    }
   }
 }

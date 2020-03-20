@@ -6,7 +6,7 @@ import { PasswordSet } from '@core/services/user/models/password-set.model';
   providedIn: 'root'
 })
 export class ProfileService {
-  private profileEndpoint = '/api/profile';
+  private profileEndpoint = '/api/pwd';
 
   constructor(private http: HttpClient) { }
 
