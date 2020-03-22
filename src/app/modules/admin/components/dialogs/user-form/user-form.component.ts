@@ -51,7 +51,6 @@ export class UserFormComponent implements OnInit {
   }
 
   private success(response: HttpResponse<User>) {
-    this.reset();
     if (response.status === 207) {
       this.snackBar.showMessage('User created but mail sending failed');
     } else {
@@ -64,18 +63,12 @@ export class UserFormComponent implements OnInit {
     this.snackBar.showMessage('An error occurred while creating the user');
   }
 
-  private reset() {
-    this.userForm.reset('');
-    this.userForm.markAsPristine();
-    this.errorMessage = null;
-  }
-
   get username() {
-    return this.userForm.controls.username;
+    return this.userForm.value.username;
   }
 
   get email() {
-    return this.userForm.controls.email;
+    return this.userForm.value.email;
   }
 
 }

@@ -31,3 +31,17 @@ $my-app-light-theme: mat-light-theme($my-app-dark-primary, $my-app-dark-accent, 
 .dark-theme {
   @include angular-material-theme($my-app-dark-theme);
 }
+
+.color-warn {
+  color: mat-color($my-app-dark-warn) !important;
+}
+.color-accent {
+  color: mat-color($my-app-dark-accent) !important;
+}
+
+.border-color-warn {
+  color: mat-color($my-app-dark-warn) !important;
+}
+.border-color-accent {
+  color: mat-color($my-app-dark-accent) !important;
+}

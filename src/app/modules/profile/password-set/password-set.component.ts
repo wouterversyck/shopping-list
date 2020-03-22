@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from '@core/services/user/profile.service';
@@ -11,16 +11,19 @@ import { CustomValidators } from '@core/validators/custom.validator';
   templateUrl: './password-set.component.html',
   styleUrls: ['./password-set.component.scss']
 })
-export class PasswordSetComponent implements OnInit {
+export class PasswordSetComponent implements OnInit, OnDestroy {
+  progressBarColor = 'warn';
 
   userForm = new FormGroup({
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, CustomValidators.passwordStrength()]),
     confirmPassword: new FormControl('', Validators.required)
   }, {
-    validators: CustomValidators.passwordsMatchValidation('password', 'confirmPassword')
+    validators: CustomValidators.passwordsMatch('password', 'confirmPassword')
   });
 
   private token: string;
+
+  private alive = true;
 
   constructor(
     private snackBarService: SnackBarService,
@@ -32,6 +35,14 @@ export class PasswordSetComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.token = params.token;
     });
+
+    this.password.valueChanges.subscribe(e => {
+      this.progressBarColor = this.passwordStrength === 100 ? 'accent' : 'warn';
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.alive = false;
   }
 
   onSubmit() {
@@ -45,8 +56,27 @@ export class PasswordSetComponent implements OnInit {
       );
   }
 
+  private amountOfPasswordStrengthErrors(errors): number {
+    return Object.keys(errors)
+      .filter((key) => (errors[key])).length;
+  }
+
+  private totalAmountOfPasswordStrengthChecks(errors): number {
+    return Object.keys(errors).length;
+  }
+
+  get passwordStrength() {
+    const totalChecks = this.totalAmountOfPasswordStrengthChecks(this.passwordStrengthErrors);
+    const unit = 100 / this.totalAmountOfPasswordStrengthChecks(this.passwordStrengthErrors);
+    return unit * (totalChecks - this.amountOfPasswordStrengthErrors(this.passwordStrengthErrors));
+  }
+
   get password() {
     return this.userForm.controls.password;
+  }
+
+  get passwordStrengthErrors() {
+    return this.password.errors.passwordStrengthErrors;
   }
 
   get confirmPassword() {
