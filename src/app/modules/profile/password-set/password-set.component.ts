@@ -5,6 +5,16 @@ import { ProfileService } from '@core/services/user/profile.service';
 import { PasswordSet } from '@core/services/user/models/password-set.model';
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 import { CustomValidators } from '@core/validators/custom.validator';
+import { takeWhile } from 'rxjs/operators';
+
+
+enum ValidationErrors {
+  containsDigit = 'containsDigit',
+  containsLowerCase = 'containsLowerCase',
+  containsUpperCase = 'containsUpperCase',
+  containsSpecialChar = 'containsSpecialChar',
+  minimumLength = 'minimumLength'
+}
 
 @Component({
   selector: 'app-password-set',
@@ -15,7 +25,9 @@ export class PasswordSetComponent implements OnInit, OnDestroy {
   progressBarColor = 'warn';
 
   userForm = new FormGroup({
-    password: new FormControl('', [Validators.required, CustomValidators.passwordStrength()]),
+    password: new FormControl('', [
+      Validators.required,
+      ...this.initValidatorsArray()]),
     confirmPassword: new FormControl('', Validators.required)
   }, {
     validators: CustomValidators.passwordsMatch('password', 'confirmPassword')
@@ -36,7 +48,9 @@ export class PasswordSetComponent implements OnInit, OnDestroy {
       this.token = params.token;
     });
 
-    this.password.valueChanges.subscribe(e => {
+    this.password.valueChanges.pipe(
+      takeWhile(() => this.alive)
+    ).subscribe(e => {
       this.progressBarColor = this.passwordStrength === 100 ? 'accent' : 'warn';
     });
   }
@@ -56,30 +70,41 @@ export class PasswordSetComponent implements OnInit, OnDestroy {
       );
   }
 
-  private amountOfPasswordStrengthErrors(errors): number {
-    return Object.keys(errors)
-      .filter((key) => (errors[key])).length;
+  private amountOfPasswordStrengthErrors(): number {
+    if (!this.password.errors) { return 0; }
+
+    return Object.keys(this.password.errors)
+      .filter(
+        (e: string) => Object.values(ValidationErrors).map(val => val.toString()).includes(e)
+      ).length;
   }
 
-  private totalAmountOfPasswordStrengthChecks(errors): number {
-    return Object.keys(errors).length;
+  private totalAmountOfPasswordStrengthChecks(): number {
+    return Object.keys(ValidationErrors).length;
+  }
+
+  private initValidatorsArray() {
+    return [
+      CustomValidators.patternForKey(/^(?=.*?[0-9])/, ValidationErrors.containsDigit),
+      CustomValidators.patternForKey(/^(?=.*?[a-z])/, ValidationErrors.containsLowerCase),
+      CustomValidators.patternForKey(/^(?=.*?[" !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"])/, ValidationErrors.containsSpecialChar),
+      CustomValidators.patternForKey(/^(?=.*?[A-Z])/, ValidationErrors.containsUpperCase),
+      CustomValidators.patternForKey(/^.{8,}$/, ValidationErrors.minimumLength),
+    ];
   }
 
   get passwordStrength() {
-    const totalChecks = this.totalAmountOfPasswordStrengthChecks(this.passwordStrengthErrors);
-    const unit = 100 / this.totalAmountOfPasswordStrengthChecks(this.passwordStrengthErrors);
-    return unit * (totalChecks - this.amountOfPasswordStrengthErrors(this.passwordStrengthErrors));
+    const totalChecks = this.totalAmountOfPasswordStrengthChecks();
+    const unit = 100 / totalChecks;
+    return unit * (totalChecks - this.amountOfPasswordStrengthErrors());
   }
 
   get password() {
     return this.userForm.controls.password;
   }
 
-  get passwordStrengthErrors() {
-    return this.password.errors.passwordStrengthErrors;
-  }
-
   get confirmPassword() {
     return this.userForm.controls.confirmPassword;
   }
+
 }

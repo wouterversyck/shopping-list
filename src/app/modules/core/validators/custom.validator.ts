@@ -20,42 +20,9 @@ export class CustomValidators {
     };
   }
 
-  static passwordStrength(): ValidatorFn {
+  static patternForKey(pattern, key: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value as string;
-      const containsSpecialCharExpression = /^(?=.*?[" !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"])/;
-      const containsAtLeastOneLowerCaseExpression = /^(?=.*?[a-z])/;
-      const containsAtLeastOneUpperCaseExpression = /^(?=.*?[A-Z])/;
-      const containsAtLeastOneDigitExpression = /^(?=.*?[0-9])/;
-      const minimumLengthExpression = /^.{8,}$/;
-
-      const errors = {
-        passwordStrengthErrors: {
-          containsDigit: false,
-          containsLowerCase: false,
-          containsUpperCase: false,
-          containsSpecialChar: false,
-          minimumLength: false
-        }
-      };
-
-      if (!value.match(containsAtLeastOneDigitExpression)) {
-        errors.passwordStrengthErrors.containsDigit = true;
-      }
-      if (!value.match(containsAtLeastOneLowerCaseExpression)) {
-        errors.passwordStrengthErrors.containsLowerCase = true;
-      }
-      if (!value.match(containsAtLeastOneUpperCaseExpression)) {
-        errors.passwordStrengthErrors.containsUpperCase = true;
-      }
-      if (!value.match(containsSpecialCharExpression)) {
-        errors.passwordStrengthErrors.containsSpecialChar = true;
-      }
-      if (!value.match(minimumLengthExpression)) {
-        errors.passwordStrengthErrors.minimumLength = true;
-      }
-
-      return errors;
+      return (control.value as string).match(pattern) ? null : { [key]: true };
     };
   }
 }

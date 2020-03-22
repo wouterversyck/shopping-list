@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ProfileRoutingModule } from './profile-routing.module';
 import { PasswordSetComponent } from './password-set/password-set.component';
 import { ReactiveFormsModule } from '@angular/forms';
