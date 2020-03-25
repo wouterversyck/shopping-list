@@ -1,4 +1,5 @@
 export class ShoppingListItem {
-  name: string;
-  id: string;
+  name = '';
+  id = '';
+  checked = false;
 }

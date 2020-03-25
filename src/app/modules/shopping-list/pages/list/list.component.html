@@ -1,12 +1,6 @@
 <div class="card-wrapper">
-  <mat-card class="list-card" *ngFor="let list of shoppingLists | async" >
-    <mat-card-header>
-      <mat-card-title>{{list.name}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <ul>
-        <li *ngFor="let listItem of list.items">{{listItem.name}}</li>
-      </ul>
-    </mat-card-content>
-  </mat-card>
+  <app-add-list *ngFor="let list of shoppingLists" [list]="list"></app-add-list>
+  <button mat-fab (click)="addList()" class="float mat-elevation-z15" color="primary">
+    <mat-icon aria-label="add user">add</mat-icon>
+  </button>
 </div>

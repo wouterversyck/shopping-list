@@ -22,8 +22,10 @@ export class UserFormComponent implements OnInit {
   userForm = new FormGroup({
     username: new FormControl('', {
       updateOn: 'blur',
-      validators: [Validators.required],
-      asyncValidators: [CustomValidators.apiValidation('usernameExists', this.userService.usernameExists)]
+      validators: [
+        Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/), Validators.maxLength(25)],
+      asyncValidators: [
+        CustomValidators.apiValidation('usernameExists', this.userService.usernameExists)]
     }),
     email: new FormControl('', {
       updateOn: 'blur',
@@ -64,11 +66,11 @@ export class UserFormComponent implements OnInit {
   }
 
   get username() {
-    return this.userForm.value.username;
+    return this.userForm.controls.username;
   }
 
   get email() {
-    return this.userForm.value.email;
+    return this.userForm.controls.email;
   }
 
 }

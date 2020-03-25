@@ -22,6 +22,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -48,7 +49,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatSidenavModule,
     MatDividerModule,
     MatSlideToggleModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatCheckboxModule
   ],
   exports: [
     MatMenuModule,
@@ -72,7 +74,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatSidenavModule,
     MatDividerModule,
     MatSlideToggleModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatCheckboxModule
   ]
 })
 export class MaterialModule { }

@@ -20,7 +20,7 @@ export class CustomValidators {
     };
   }
 
-  static patternForKey(pattern, key: string): ValidatorFn {
+  static patternForKey(pattern: RegExp, key: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       return (control.value as string).match(pattern) ? null : { [key]: true };
     };

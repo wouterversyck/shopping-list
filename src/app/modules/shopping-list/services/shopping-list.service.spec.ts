@@ -28,7 +28,8 @@ describe('ShoppingListService', () => {
         items: [
           {
             id: 'ID',
-            name: 'NAME_ITEM'
+            name: 'NAME_ITEM',
+            checked: false
           }
         ]
       }];

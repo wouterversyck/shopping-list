@@ -1,6 +1,6 @@
 <form [formGroup]="userForm">
   <mat-form-field>
-    <mat-label>Username:</mat-label>
+    <mat-label>Email or username:</mat-label>
     <input matInput type="text" formControlName="username" [value]="" required>
     <mat-error *ngIf="username.invalid && username.errors.required">User name is required.</mat-error>
   </mat-form-field>

@@ -1,9 +1,6 @@
-.card-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.list-card {
-  display: inline-block;
-  margin: 10px;
+.float {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  z-index: 100;
 }

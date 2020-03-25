@@ -5,13 +5,16 @@ import { ShoppingListRoutingModule } from './shopping-list-routing.module';
 import { ListComponent } from './pages/list/list.component';
 import { MaterialModule } from '@core/../material/material.module';
 import { ShoppingListService } from '@app/modules/shopping-list/services/shopping-list.service';
+import { AddListComponent } from './components/add-list/add-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent, AddListComponent],
   imports: [
     CommonModule,
     ShoppingListRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
   ],
   providers: [ShoppingListService]
 })
