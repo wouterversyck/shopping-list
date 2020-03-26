@@ -20,7 +20,6 @@ export class AddListComponent implements OnInit {
       name: this.list.name,
       items: this.formBuilder.array(this.createItems(this.list.items))
     });
-
   }
 
   onSubmit() {
@@ -50,7 +49,6 @@ export class AddListComponent implements OnInit {
   get items(): FormGroup {
     return this.form.controls.items as FormGroup;
   }
-
 
   getCheckedItems(items: ShoppingListItem[]) {
     return items.filter(e => e.checked);
