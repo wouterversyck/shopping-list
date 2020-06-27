@@ -8,7 +8,8 @@
     "build-prd": "ng build --prod --base-href /marcus/",
     "test": "ng test",
     "test-ci": "npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
-    "test-chromium": "export CHROME_BIN=$(which chromium); npm test",
+    "test-pre-push": "export CHROME_BIN=$(which chromium) ; npm run test-ci",
+    "test-chromium": "export CHROME_BIN=$(which chromium) ; npm test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
