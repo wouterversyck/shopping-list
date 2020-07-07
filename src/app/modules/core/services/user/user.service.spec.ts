@@ -25,7 +25,7 @@ describe('UserService', () => {
 
     service.getUsers().subscribe((response: UserPage) => expect(response).toEqual(data));
 
-    const req = httpMock.expectOne('/api/admin/users?page=0&size=25');
+    const req = httpMock.expectOne('api/admin/users?page=0&size=25');
     req.flush(data);
 
     expect(req.request.method).toEqual('GET');
@@ -38,7 +38,7 @@ describe('UserService', () => {
 
     service.getUsers(2, 20).subscribe((response: UserPage) => expect(response).toEqual(data));
 
-    const req = httpMock.expectOne('/api/admin/users?page=2&size=20');
+    const req = httpMock.expectOne('api/admin/users?page=2&size=20');
     req.flush(data);
 
     expect(req.request.method).toEqual('GET');
@@ -51,7 +51,7 @@ describe('UserService', () => {
 
     service.addUser(data).subscribe((response: HttpResponse<User>) => expect(response.body).toEqual(data));
 
-    const req = httpMock.expectOne('/api/admin/users');
+    const req = httpMock.expectOne('api/admin/users');
     req.flush(data);
 
     expect(req.request.method).toEqual('POST');
@@ -65,7 +65,7 @@ describe('UserService', () => {
 
     service.getRoles().subscribe((response: Role[]) => expect(response).toEqual(data));
 
-    const req = httpMock.expectOne('/api/admin/roles');
+    const req = httpMock.expectOne('api/admin/roles');
     req.flush(data);
 
     expect(req.request.method).toEqual('GET');
@@ -78,7 +78,7 @@ describe('UserService', () => {
 
     service.usernameExists(username).subscribe((response: boolean) => expect(response).toEqual(true));
 
-    const req = httpMock.expectOne(`/api/admin/users/exists?username=${username}`);
+    const req = httpMock.expectOne(`api/admin/users/exists?username=${username}`);
     req.event(new HttpResponse<boolean>({body: true}));
 
     expect(req.request.method).toEqual('GET');
@@ -91,7 +91,7 @@ describe('UserService', () => {
 
     service.emailExists(email).subscribe((response: boolean) => expect(response).toEqual(true));
 
-    const req = httpMock.expectOne(`/api/admin/users/exists?email=${email}`);
+    const req = httpMock.expectOne(`api/admin/users/exists?email=${email}`);
     req.event(new HttpResponse<boolean>({body: true}));
 
     expect(req.request.method).toEqual('GET');
@@ -103,7 +103,7 @@ describe('UserService', () => {
 
     service.sendPasswordSetMail(5).subscribe();
 
-    const req = httpMock.expectOne(`/api/admin/users/passwordSet/5`);
+    const req = httpMock.expectOne(`api/admin/users/passwordSet/5`);
     req.event(new HttpResponse<void>());
 
     expect(req.request.method).toEqual('GET');

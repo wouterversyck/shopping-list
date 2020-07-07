@@ -2,7 +2,7 @@ import {inject, TestBed} from '@angular/core/testing';
 
 import { AuthenticationService } from './authentication.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { LoginRequest } from '@core/services/authentication/models/loginRequest.model';
 import createSpy = jasmine.createSpy;
@@ -94,7 +94,7 @@ describe('AuthenticationService', () => {
 
     service.login('username', 'password').subscribe();
 
-    const req = httpMock.expectOne('/api/login');
+    const req = httpMock.expectOne('api/login');
     req.event(new HttpResponse({headers: new HttpHeaders({'X-Token': 'token'})}));
 
     expect(req.request.method).toEqual('POST');

@@ -13,7 +13,7 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
     const loginRequest = new LoginRequest(username, password);
-    return this.http.post<Response>('/api/login', loginRequest, { observe: 'response' })
+    return this.http.post<Response>('api/login', loginRequest, { observe: 'response' })
       .pipe(
         tap(
           response => this.setToken(response)
@@ -39,7 +39,7 @@ export class AuthenticationService {
   }
 
   signInWithGoogle(idToken: string) {
-    return this.http.post<Response>('/api/oauth/google', { idToken }, { observe: 'response' })
+    return this.http.post<Response>('api/oauth/google', { idToken }, { observe: 'response' })
       .pipe(
         tap(
           response => this.setToken(response)

@@ -9,7 +9,7 @@ import { UserPage } from '@core/services/user/models/UserPage.model';
   providedIn: 'root'
 })
 export class UserService {
-  private adminEndpoint = '/api/admin/';
+  private adminEndpoint = 'api/admin/';
   private usersUrl = `${this.adminEndpoint}users`;
   private rolesUrl = `${this.adminEndpoint}roles`;
 
