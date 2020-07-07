@@ -1,0 +1,6 @@
+<div class="card-wrapper">
+  <app-note *ngFor="let n of notes" [note]="n"></app-note>
+  <button mat-fab (click)="addNote()" class="float mat-elevation-z15" color="primary">
+    <mat-icon aria-label="add user">add</mat-icon>
+  </button>
+</div>

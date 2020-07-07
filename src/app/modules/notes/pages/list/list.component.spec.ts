@@ -4,7 +4,7 @@ import { ListComponent } from './list.component';
 import { MaterialModule } from '@app/modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
-import { ShoppingListService } from '@app/modules/shopping-list/services/shopping-list.service';
+import { NotesService } from '@app/modules/notes/services/notes.service';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -22,7 +22,7 @@ describe('ListComponent', () => {
         MaterialModule
       ],
       providers: [
-        ShoppingListService
+        NotesService
       ]
     })
     .compileComponents();

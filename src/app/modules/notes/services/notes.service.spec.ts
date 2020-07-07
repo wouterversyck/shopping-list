@@ -1,40 +1,41 @@
 import {inject, TestBed} from '@angular/core/testing';
 
-import { ShoppingListService } from './shopping-list.service';
+import { NotesService } from './notes.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ShoppingList } from '@app/modules/shopping-list/models/shopping-list.model';
+import { Note } from '@app/modules/notes/models/note.model';
 
 describe('ShoppingListService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
-      ShoppingListService
+      NotesService
     ],
     imports: [
       HttpClientTestingModule
     ]
   }));
 
-  it('should be created', inject([ShoppingListService],
-    (service: ShoppingListService) => {
+  it('should be created', inject([NotesService],
+    (service: NotesService) => {
     expect(service).toBeTruthy();
   }));
 
-  it('should return a shopping list', inject([HttpTestingController, ShoppingListService],
-    (httpMock: HttpTestingController, service: ShoppingListService) => {
+  it('should return a shopping list', inject([HttpTestingController, NotesService],
+    (httpMock: HttpTestingController, service: NotesService) => {
 
-      const data: ShoppingList[] = [{
+      const data: Note[] = [{
         id: 'ID',
         name: 'NAME',
         items: [
           {
-            id: 'ID',
-            name: 'NAME_ITEM',
-            checked: false
+            contents: 'CONTENTS_ITEM',
+            checked: false,
+            entryType: 'RICH_TEXT',
+            children: []
           }
         ]
       }];
 
-      service.getShoppingList().subscribe((response: ShoppingList[]) => {
+      service.getNotes().subscribe((response: Note[]) => {
         expect(response).toEqual(data);
       });
 

@@ -15,7 +15,7 @@ const routes: Routes = [
     path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule)
   },
   {
-    path: 'list', loadChildren: () => import('./modules/shopping-list/shopping-list.module').then(m => m.ShoppingListModule),
+    path: 'list', loadChildren: () => import('./modules/notes/notes.module').then(m => m.NotesModule),
     canActivate: [LoginGuard],
     data: {
       authGuardRedirect: '/login'

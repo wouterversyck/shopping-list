@@ -15,6 +15,31 @@ import { HeaderComponent } from './root-layouts/header/header.component';
 import { NavigationComponent } from './root-layouts/navigation/navigation.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { QuillModule } from 'ngx-quill';
+
+const toolbarOptions = [
+  { size: [ 'small', false, 'large', 'huge' ]},
+  {},
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'link',
+  'image',
+  'video',
+  {},
+  { color: [] },
+  { background: [] },
+  {},
+  { indent: '-1'},
+  { indent: '+1' },
+  { list: 'ordered'},
+  { list: 'bullet' },
+  { align: [] },
+  {},
+  'code-block',
+  'clean'
+];
 
 if (environment.production) {
   Sentry.init({
@@ -45,15 +70,21 @@ export class SentryErrorHandler implements ErrorHandler {
     MaterialModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    QuillModule.forRoot({
+      modules: {
+        toolbar: [toolbarOptions],
+        syntax: true
+      }
+    }),
     JwtModule.forRoot({
       config: {
         tokenGetter,
         whitelistedDomains: ['localhost:4200', 'woopsel.be', 'www.woopsel.be']
       }
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
-  providers: [{ provide: ErrorHandler, useClass: environment.production ? SentryErrorHandler : ErrorHandler }],
+  providers: [{provide: ErrorHandler, useClass: environment.production ? SentryErrorHandler : ErrorHandler}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

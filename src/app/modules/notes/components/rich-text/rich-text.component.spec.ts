@@ -1,31 +1,37 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddListComponent } from './add-list.component';
+import { RichTextComponent } from './rich-text.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ShoppingList } from '@app/modules/shopping-list/models/shopping-list.model';
 import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { QuillModule } from 'ngx-quill';
 
-describe('AddListComponent', () => {
-  let component: AddListComponent;
-  let fixture: ComponentFixture<AddListComponent>;
+describe('RichTextComponent', () => {
+  let component: RichTextComponent;
+  let fixture: ComponentFixture<RichTextComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddListComponent ],
+      declarations: [ RichTextComponent ],
       imports: [
         ReactiveFormsModule,
         MaterialModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        QuillModule.forRoot()
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddListComponent);
+    fixture = TestBed.createComponent(RichTextComponent);
     component = fixture.componentInstance;
-    component.list = { name: 'title', items: [] } as ShoppingList;
+    component.entry = {
+      contents: 'test',
+      entryType: 'RICH_TEXT',
+      checked: false,
+      children: []
+    };
     fixture.detectChanges();
   });
 

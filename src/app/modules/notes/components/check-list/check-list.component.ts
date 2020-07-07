@@ -1,24 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { ShoppingList } from '@app/modules/shopping-list/models/shopping-list.model';
-import { ShoppingListItem } from '@app/modules/shopping-list/models/shopping-list-item.model';
+import { Entry } from '@app/modules/notes/models/entry.model';
+import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
 
 @Component({
-  selector: 'app-add-list',
-  templateUrl: './add-list.component.html',
-  styleUrls: ['./add-list.component.scss']
+  selector: 'app-check-list',
+  templateUrl: './check-list.component.html',
+  styleUrls: ['./check-list.component.scss']
 })
-export class AddListComponent implements OnInit {
-  @Input() list: ShoppingList;
-
+export class CheckListComponent implements OnInit, NoteEntry {
+  @Input() entry: Entry;
   form: FormGroup;
-
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      name: this.list.name,
-      items: this.formBuilder.array(this.createItems(this.list.items))
+      title: this.entry.contents,
+      items: this.formBuilder.array(this.createItems(this.entry.children))
     });
   }
 
@@ -26,7 +24,7 @@ export class AddListComponent implements OnInit {
 
   }
 
-  addItem(): void {
+  addItem() {
     const items = this.form.get('items') as FormArray;
     items.push(this.createItem());
   }
@@ -34,27 +32,27 @@ export class AddListComponent implements OnInit {
   private createItem(): FormGroup {
     return this.formBuilder.group({
       checked: false,
-      name: '',
+      contents: '',
     });
   }
 
-  private createItems(items: ShoppingListItem[]): FormGroup[] {
+  private createItems(items: Entry[]): FormGroup[] {
     if (Array.isArray(items) && items.length > 0) {
       return items.map(e => this.formBuilder.group(e));
     }
 
-    return [this.formBuilder.group(new ShoppingListItem())];
+    return [this.formBuilder.group(new Entry())];
   }
 
   get items(): FormGroup {
     return this.form.controls.items as FormGroup;
   }
 
-  getCheckedItems(items: ShoppingListItem[]) {
+  getCheckedItems(items: Entry[]) {
     return items.filter(e => e.checked);
   }
 
-  getUnCheckedItems(items: ShoppingListItem[]) {
+  getUnCheckedItems(items: Entry[]) {
     return items.filter(e => !e.checked);
   }
 }
