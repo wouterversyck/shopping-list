@@ -1,5 +1,5 @@
-import { Entry } from '../models/entry.model';
+import { FormGroup } from '@angular/forms';
 
 export interface NoteEntry {
-  entry: Entry;
+  entry: FormGroup;
 }

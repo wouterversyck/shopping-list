@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Entry } from '@app/modules/notes/models/entry.model';
 import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-rich-text',
@@ -9,18 +8,24 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./rich-text.component.scss']
 })
 export class RichTextComponent implements OnInit, NoteEntry {
-  @Input() entry: Entry;
-  form: FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
+  @Input() entry: FormGroup;
+  editMode = false;
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      contents: this.entry.contents
-    });
   }
 
   onSubmit() {
+    this.toggleEditMode();
+  }
 
+  get contents() {
+    return this.entry.controls.contents.value;
+  }
+
+  toggleEditMode() {
+    this.editMode = !this.editMode;
   }
 
 }

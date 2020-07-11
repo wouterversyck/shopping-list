@@ -1,6 +1,7 @@
 export class Entry {
-  contents = '';
+  id: string;
+  contents = 'Note';
   entryType = 'RICH_TEXT';
   checked = false;
-  children = [];
+  children: Entry[] = [];
 }

@@ -11,4 +11,8 @@ export class NotesService {
   getNotes() {
     return this.httpClient.get<Note[]>(`${this.NOTES_URL}/all`);
   }
+
+  saveNote(note: Note) {
+    return this.httpClient.post(`${this.NOTES_URL}/save`, note);
+  }
 }

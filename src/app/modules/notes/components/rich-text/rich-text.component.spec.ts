@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RichTextComponent } from './rich-text.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillModule } from 'ngx-quill';
@@ -26,12 +26,12 @@ describe('RichTextComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RichTextComponent);
     component = fixture.componentInstance;
-    component.entry = {
-      contents: 'test',
-      entryType: 'RICH_TEXT',
-      checked: false,
-      children: []
-    };
+    component.entry = new FormGroup({
+      contents: new FormControl('test'),
+      entryType: new FormControl('test'),
+      checked: new FormControl('test'),
+      children: new FormControl('test')
+    });
     fixture.detectChanges();
   });
 

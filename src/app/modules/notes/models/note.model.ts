@@ -4,4 +4,6 @@ export class Note {
   id: string;
   name = 'title';
   items: Entry[];
+  contributors: number[];
+  owner: number;
 }

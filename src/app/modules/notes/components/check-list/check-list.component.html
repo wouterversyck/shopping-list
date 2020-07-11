@@ -1,12 +1,12 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="entry" (ngSubmit)="onSubmit()">
   <mat-card class="list-card">
     <mat-card-header>
       <mat-card-title>
-        <input matInput type="text" formControlName="title" required>
+        <input matInput type="text" formControlName="contents" required>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div formArrayName="items"
+      <div formArrayName="children"
            *ngFor="let item of items.controls; let i = index;">
         <div [formGroupName]="i">
           <mat-checkbox formControlName="checked"></mat-checkbox>

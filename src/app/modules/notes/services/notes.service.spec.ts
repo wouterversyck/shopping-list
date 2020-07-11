@@ -25,8 +25,11 @@ describe('ShoppingListService', () => {
       const data: Note[] = [{
         id: 'ID',
         name: 'NAME',
+        contributors: [1],
+        owner: 1,
         items: [
           {
+            id: '1',
             contents: 'CONTENTS_ITEM',
             checked: false,
             entryType: 'RICH_TEXT',

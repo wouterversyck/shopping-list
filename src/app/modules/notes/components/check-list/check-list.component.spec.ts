@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CheckListComponent } from './check-list.component';
 import { Entry } from '@app/modules/notes/models/entry.model';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -25,12 +25,12 @@ describe('CheckListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckListComponent);
     component = fixture.componentInstance;
-    component.entry = {
-      contents: 'test',
-      entryType: 'RICH_TEXT',
-      checked: false,
-      children: []
-    };
+    component.entry = new FormGroup({
+      contents: new FormControl('test'),
+      entryType: new FormControl('test'),
+      checked: new FormControl('test'),
+      children: new FormControl('test')
+    });
     fixture.detectChanges();
   });
 

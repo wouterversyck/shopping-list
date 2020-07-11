@@ -1,3 +1,7 @@
-<h1>{{ note.name }}</h1>
+<form [formGroup]="form" >
+  <h1>
+    <input matInput type="text" formControlName="name" required>
+  </h1>
+</form>
 <ng-template appAddHost></ng-template>
 <button (click)="addItem()">New</button>
