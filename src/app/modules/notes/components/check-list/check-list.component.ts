@@ -15,10 +15,6 @@ export class CheckListComponent implements OnInit, NoteEntry {
   ngOnInit(): void {
   }
 
-  onSubmit() {
-
-  }
-
   addItem() {
     this.items.push(this.createItem());
   }

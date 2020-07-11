@@ -16,10 +16,6 @@ export class RichTextComponent implements OnInit, NoteEntry {
   ngOnInit(): void {
   }
 
-  onSubmit() {
-    this.toggleEditMode();
-  }
-
   get contents() {
     return this.entry.controls.contents.value;
   }
