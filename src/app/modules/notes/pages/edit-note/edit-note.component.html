@@ -1,0 +1,3 @@
+<div class="card-wrapper">
+  <app-note *ngIf="note" (deleted)="deleteNote($event)" [note]="note" class="card"></app-note>
+</div>

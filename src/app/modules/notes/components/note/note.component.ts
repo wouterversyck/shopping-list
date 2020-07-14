@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, EventEmitter, Output, OnInit, ViewChild } from '@angular/core';
 import { Note } from '@app/modules/notes/models/note.model';
 import { AddHostDirective } from '@shared/directives/add-host.directive';
 import { Entry } from '@app/modules/notes/models/entry.model';
@@ -7,7 +7,10 @@ import { RichTextComponent } from '@app/modules/notes/components/rich-text/rich-
 import { CheckListComponent } from '@app/modules/notes/components/check-list/check-list.component';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NotesService } from '@app/modules/notes/services/notes.service';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { UserFormComponent } from '@app/modules/admin/components/dialogs/user-form/user-form.component';
+import { CreateNoteEntryComponent } from '@app/modules/notes/components/dialogs/create-note-entry/create-note-entry.component';
 
 @Component({
   selector: 'app-note',
@@ -15,6 +18,8 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
   styleUrls: ['./note.component.scss']
 })
 export class NoteComponent implements OnInit {
+  @Output()
+  deleted = new EventEmitter<string>();
   @Input() note: Note;
   form: FormGroup;
   @ViewChild(AddHostDirective, {static: true}) adHost: AddHostDirective;
@@ -27,7 +32,8 @@ export class NoteComponent implements OnInit {
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private formBuilder: FormBuilder,
-    private notesService: NotesService) { }
+    private notesService: NotesService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -39,15 +45,14 @@ export class NoteComponent implements OnInit {
     });
     this.form.valueChanges
       .pipe(
-        debounceTime(1500)
-      ).pipe(
-        distinctUntilChanged()
-      ).pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
         map(e => {
           e.contributors = e.contributors.map(d => d.id);
           return e;
-        })
-      ).subscribe(e => this.notesService.saveNote(e).subscribe());
+        }),
+        switchMap(this.notesService.save)
+      ).subscribe();
 
     if (!this.note.items) {
       return;
@@ -62,9 +67,17 @@ export class NoteComponent implements OnInit {
   }
 
   addItem() {
-    const item = this.formBuilder.group(new Entry());
-    this.addEntry(item);
-    (this.form.controls.items as FormArray).push(item);
+    this.dialog
+      .open(CreateNoteEntryComponent)
+      .afterClosed().subscribe(result => {
+        const item = this.formBuilder.group(new Entry(result));
+        this.addEntry(item);
+        (this.form.controls.items as FormArray).push(item);
+      });
+  }
+
+  delete() {
+    this.deleted.emit(this.note.id);
   }
 
   private createItems(items: Entry[]): FormGroup[] {

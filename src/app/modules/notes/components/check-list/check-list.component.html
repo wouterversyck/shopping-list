@@ -1,21 +1,25 @@
-<form [formGroup]="entry">
-  <mat-card class="list-card">
-    <mat-card-header>
-      <mat-card-title>
-        <input matInput type="text" formControlName="contents" required>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div formArrayName="children"
-           *ngFor="let item of items.controls; let i = index;">
-        <div [formGroupName]="i">
-          <mat-checkbox formControlName="checked"></mat-checkbox>
-          <mat-form-field>
-            <input matInput formControlName="contents">
-          </mat-form-field>
-        </div>
+<mat-card class="list-card">
+  <form [formGroup]="entry">
+  <mat-card-header>
+    <mat-card-title>
+      <input matInput type="text" formControlName="contents" required>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div formArrayName="children"
+         *ngFor="let item of items.controls; let i = index;">
+      <div [formGroupName]="i">
+        <mat-form-field>
+          <mat-checkbox matPrefix formControlName="checked"></mat-checkbox>
+          <input matInput formControlName="contents">
+          <mat-icon matSuffix (click)="deleteItem(i)">clear</mat-icon>
+        </mat-form-field>
       </div>
-      <button mat-button (click)="addItem()"><mat-icon>add</mat-icon></button>
-    </mat-card-content>
-  </mat-card>
-</form>
+    </div>
+    <button mat-button (click)="addItem()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-content>
+  </form>
+</mat-card>
+

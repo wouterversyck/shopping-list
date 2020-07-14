@@ -13,10 +13,20 @@ export class ListComponent implements OnInit {
   constructor(private notesService: NotesService) { }
 
   ngOnInit() {
-    this.notesService.getNotes().subscribe(e => this.notes = e);
+    this.getAllNotes();
   }
 
+  deleteNote(id) {
+    this.notesService.delete(id)
+      .subscribe(this.getAllNotes);
+  }
+
+  getAllNotes = () => this.notesService.getAll().subscribe(e => this.notes = e);
+
   addNote() {
-    this.notes.push(new Note());
+    this.notesService.save(new Note())
+      .subscribe((e: Note) => {
+        this.notes.push(e);
+      });
   }
 }

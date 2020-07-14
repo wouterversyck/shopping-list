@@ -5,6 +5,8 @@ import { Note } from '@app/modules/notes/models/note.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotesService } from '@app/modules/notes/services/notes.service';
 import { of } from 'rxjs';
+import { MaterialModule } from '@app/modules/material/material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NoteComponent', () => {
   let component: NoteComponent;
@@ -18,7 +20,11 @@ describe('NoteComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NoteComponent ],
       providers: [ { provide: NotesService, useValue: mockNotesService } ],
-      imports: [ ReactiveFormsModule ]
+      imports: [
+        ReactiveFormsModule,
+        MaterialModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));

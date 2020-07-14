@@ -13,10 +13,19 @@ export class CheckListComponent implements OnInit, NoteEntry {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    if (!this.items.push) {
+      this.entry.controls.children = this.formBuilder.array(
+        [this.formBuilder.group(new Entry('SHOPPING_LIST_ITEM'))]
+      );
+    }
   }
 
   addItem() {
     this.items.push(this.createItem());
+  }
+
+  deleteItem(index: number) {
+    this.items.removeAt(index);
   }
 
   private createItem(): FormGroup {

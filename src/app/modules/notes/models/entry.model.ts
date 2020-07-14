@@ -1,7 +1,11 @@
 export class Entry {
   id: string;
-  contents = 'Note';
-  entryType = 'RICH_TEXT';
+  contents: string;
+  entryType: string;
   checked = false;
   children: Entry[] = [];
+
+  constructor(entryType?: string) {
+    this.entryType =  entryType ?? 'RICH_TEXT';
+  }
 }

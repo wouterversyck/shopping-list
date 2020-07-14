@@ -4,3 +4,16 @@
   right: 40px;
   z-index: 100;
 }
+
+.card-wrapper {
+  padding: 15px;
+}
+
+.card {
+  display: inline-block;
+  margin-right: 50px;
+  height: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

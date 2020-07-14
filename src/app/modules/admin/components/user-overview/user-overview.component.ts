@@ -7,7 +7,7 @@ import { UserFormComponent } from '@app/modules/admin/components/dialogs/user-fo
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 import { BehaviorSubject} from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import {ConfirmService} from '@shared/services/confirm/confirm.service';
+import { ConfirmService } from '@shared/services/confirm/confirm.service';
 
 @Component({
   selector: 'app-user-overview',

@@ -1,9 +1,17 @@
-<form [formGroup]="form">
-  <h1>
-    <mat-form-field>
-      <input matInput formControlName="name">
-    </mat-form-field>
-  </h1>
-</form>
-<ng-template appAddHost></ng-template>
-<button (click)="addItem()">New</button>
+<mat-card>
+  <mat-card-header>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <input matInput formControlName="name">
+      </mat-form-field>
+    </form>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-template appAddHost></ng-template>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="addItem()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
