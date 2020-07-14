@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, Input, EventEmitter, Output, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Note } from '@app/modules/notes/models/note.model';
 import { AddHostDirective } from '@shared/directives/add-host.directive';
 import { Entry } from '@app/modules/notes/models/entry.model';
@@ -9,8 +9,8 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NotesService } from '@app/modules/notes/services/notes.service';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { UserFormComponent } from '@app/modules/admin/components/dialogs/user-form/user-form.component';
 import { CreateNoteEntryComponent } from '@app/modules/notes/components/dialogs/create-note-entry/create-note-entry.component';
+import { EntryType } from '@app/modules/notes/models/entry-type.model';
 
 @Component({
   selector: 'app-note',
@@ -24,10 +24,10 @@ export class NoteComponent implements OnInit {
   form: FormGroup;
   @ViewChild(AddHostDirective, {static: true}) adHost: AddHostDirective;
 
-  components = {
-    RICH_TEXT: RichTextComponent,
-    SHOPPING_LIST: CheckListComponent
-  };
+  componentMap = new Map<EntryType, any>([
+    [EntryType.CHECK_LIST, CheckListComponent],
+    [EntryType.RICH_TEXT, RichTextComponent]
+  ]);
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -61,7 +61,9 @@ export class NoteComponent implements OnInit {
   }
 
   addEntry(entry: FormGroup) {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.components[entry.value.entryType]);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+      this.componentMap.get(entry.value.entryType)
+    );
     const componentRef = this.adHost.viewContainerRef.createComponent(componentFactory);
     (componentRef.instance as NoteEntry).entry = entry;
   }

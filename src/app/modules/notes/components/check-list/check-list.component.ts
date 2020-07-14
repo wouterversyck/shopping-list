@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Entry } from '@app/modules/notes/models/entry.model';
 import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
+import { EntryType } from '@app/modules/notes/models/entry-type.model';
 
 @Component({
   selector: 'app-check-list',
@@ -15,7 +16,7 @@ export class CheckListComponent implements OnInit, NoteEntry {
   ngOnInit(): void {
     if (!this.items.push) {
       this.entry.controls.children = this.formBuilder.array(
-        [this.formBuilder.group(new Entry('SHOPPING_LIST_ITEM'))]
+        [this.formBuilder.group(new Entry(EntryType.CHECK_LIST_ITEM))]
       );
     }
   }
