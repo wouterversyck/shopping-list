@@ -17,12 +17,4 @@ export class EditNoteComponent implements OnInit {
     this.notesService.get(id).subscribe(e => this.note = e);
   }
 
-  deleteNote(event) {
-
-  }
-
-  addEntry() {
-
-  }
-
 }

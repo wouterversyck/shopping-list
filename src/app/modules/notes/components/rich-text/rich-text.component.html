@@ -1,6 +1,0 @@
-<form *ngIf="editMode" [formGroup]="entry" (ngSubmit)="toggleEditMode()">
-  <quill-editor *ngIf="editMode" formControlName="contents" required>
-  </quill-editor>
-  <button type="submit" mat-button mat-raised-button>Done</button>
-</form>
-<div [innerHTML]="contents" (click)="toggleEditMode()" *ngIf="!editMode"></div>

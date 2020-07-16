@@ -1,8 +1,9 @@
-import {inject, TestBed} from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { NotesService } from './notes.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Note } from '@app/modules/notes/models/note.model';
+import { EntryType } from '@app/modules/notes/models/entry-type.model';
 
 describe('NotesService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -29,10 +30,9 @@ describe('NotesService', () => {
         owner: 1,
         items: [
           {
-            id: '1',
             contents: 'CONTENTS_ITEM',
             checked: false,
-            entryType: 'RICH_TEXT',
+            entryType: EntryType.RICH_TEXT,
             children: []
           }
         ]

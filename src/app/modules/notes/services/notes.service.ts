@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Note } from '@app/modules/notes/models/note.model';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class NotesService {
@@ -16,8 +17,8 @@ export class NotesService {
     return this.httpClient.get<Note>(`${this.NOTES_URL}/${id}`);
   }
 
-  save = (note: Note) => {
-    return this.httpClient.post(this.NOTES_URL, note);
+  save = (note: Note): Observable<Note> => {
+    return this.httpClient.post<Note>(this.NOTES_URL, note);
   }
 
   delete = (id: string) => {

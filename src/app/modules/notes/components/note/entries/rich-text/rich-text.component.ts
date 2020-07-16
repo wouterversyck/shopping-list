@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
 import { FormGroup } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class RichTextComponent implements OnInit, NoteEntry {
   @Input() entry: FormGroup;
+  @Output() deleted = new EventEmitter<void>();
   editMode = false;
 
   constructor() { }
@@ -16,12 +17,16 @@ export class RichTextComponent implements OnInit, NoteEntry {
   ngOnInit(): void {
   }
 
-  get contents() {
-    return this.entry.controls.contents.value;
+  deleteThis() {
+    this.deleted.emit();
   }
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+  }
+
+  get contents() {
+    return this.entry.controls.contents.value;
   }
 
 }

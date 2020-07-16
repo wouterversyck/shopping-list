@@ -1,0 +1,75 @@
+<mat-card-content>
+  <form *ngIf="editMode" [formGroup]="entry" (ngSubmit)="toggleEditMode()">
+    <quill-editor *ngIf="editMode" formControlName="contents" required>
+      <div quill-editor-toolbar>
+        <select class="ql-size" [title]="'Size'">
+          <option value="small"></option>
+          <option selected value="normal"></option>
+          <option value="large"></option>
+          <option value="huge"></option>
+        </select>
+        <select class="ql-color" [title]="'Color'">
+          <option value="white"></option>
+          <option value="black"></option>
+          <option value="green"></option>
+          <option value="red"></option>
+          <option value="blue"></option>
+          <option value="yellow"></option>
+          <option value="#005566"></option>
+        </select>
+        <select class="ql-background" [title]="'Background'">
+          <option value="white"></option>
+          <option value="black"></option>
+          <option value="green"></option>
+          <option value="red"></option>
+          <option value="blue"></option>
+          <option value="yellow"></option>
+          <option value="clear"></option>
+        </select>
+        <span class="ql-formats">
+          <button class="ql-bold" [title]="'Bold'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-italic" [title]="'Italic'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-underline" [title]="'Underline'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-strike" [title]="'Strike through'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-link" [title]="'Link'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-image" [title]="'Image'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-video" [title]="'Video'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-list" value="ordered" [title]="'Ordered list'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-list" value="bullet" [title]="'Bullet list'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-indent" value="+1" [title]="'Indent to right'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-indent" value="-1" [title]="'Indent to left'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-code-block" [title]="'Code block'"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-clean" value="-1" [title]="'Clean'"></button>
+        </span>
+      </div>
+    </quill-editor>
+    <button type="submit" mat-button mat-raised-button>Done</button>
+  </form>
+  <mat-icon matSuffix (click)="deleteThis()">delete</mat-icon>
+  <div class="ql-editor" [innerHTML]="contents | safeHtml" (click)="toggleEditMode()" *ngIf="!editMode"></div>
+</mat-card-content>
+

@@ -11,7 +11,7 @@ import { CustomValidators } from '@core/validators/custom.validator';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 import { User } from '@core/services/user/models/user.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-user-form',
@@ -19,6 +19,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
+  roles: Observable<Role[]> = of([]);
+  errorMessage = '';
+
   userForm = new FormGroup({
     username: new FormControl('', {
       updateOn: 'blur',
@@ -34,9 +37,6 @@ export class UserFormComponent implements OnInit {
     }),
     role: new FormControl('', Validators.required)
   });
-
-  roles: Observable<Role[]>;
-  errorMessage: string;
 
   constructor(private userService: UserService, private snackBar: SnackBarService, private dialogRef: MatDialogRef<UserFormComponent>) {
   }

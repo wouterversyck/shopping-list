@@ -30,7 +30,7 @@ export class SocialLoginComponent implements OnInit {
       .then((user: SocialUser) => this.loginOnApiWithGoogleToken(user.idToken));
   }
 
-  private continueLoginWithUser() {
+  continueLoginWithUser() {
     this.loginOnApiWithGoogleToken(this.userSubject.getValue().idToken);
   }
 

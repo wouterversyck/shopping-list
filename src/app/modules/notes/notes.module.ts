@@ -8,8 +8,8 @@ import { NotesService } from './services/notes.service';
 import { NoteComponent } from './components/note/note.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { CheckListComponent } from './components/check-list/check-list.component';
-import { RichTextComponent } from './components/rich-text/rich-text.component';
+import { CheckListComponent } from './components/note/entries/check-list/check-list.component';
+import { RichTextComponent } from './components/note/entries/rich-text/rich-text.component';
 import { QuillModule } from 'ngx-quill';
 import { PreviewComponent } from './components/preview/preview.component';
 import { EditNoteComponent } from './pages/edit-note/edit-note.component';
@@ -23,7 +23,8 @@ import { CreateNoteEntryComponent } from './components/dialogs/create-note-entry
     RichTextComponent,
     PreviewComponent,
     EditNoteComponent,
-    CreateNoteEntryComponent],
+    CreateNoteEntryComponent
+  ],
   imports: [
     CommonModule,
     NotesRoutingModule,

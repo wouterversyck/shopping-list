@@ -17,29 +17,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { QuillModule } from 'ngx-quill';
 
-const toolbarOptions = [
-  { size: [ 'small', false, 'large', 'huge' ]},
-  {},
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'link',
-  'image',
-  'video',
-  {},
-  { color: [] },
-  { background: [] },
-  {},
-  { indent: '-1'},
-  { indent: '+1' },
-  { list: 'ordered'},
-  { list: 'bullet' },
-  { align: [] },
-  {},
-  'code-block',
-  'clean'
-];
 
 if (environment.production) {
   Sentry.init({
@@ -50,7 +27,7 @@ if (environment.production) {
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
   constructor() {}
-  handleError(error) {
+  handleError(error: any) {
     Sentry.captureException(error.originalError || error);
     throw error;
   }
@@ -72,7 +49,6 @@ export class SentryErrorHandler implements ErrorHandler {
     HttpClientModule,
     QuillModule.forRoot({
       modules: {
-        toolbar: [toolbarOptions],
         syntax: true
       }
     }),

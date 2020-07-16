@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Entry } from '@app/modules/notes/models/entry.model';
 import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
@@ -11,6 +11,7 @@ import { EntryType } from '@app/modules/notes/models/entry-type.model';
 })
 export class CheckListComponent implements OnInit, NoteEntry {
   @Input() entry: FormGroup;
+  @Output() deleted = new EventEmitter<void>();
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -23,6 +24,10 @@ export class CheckListComponent implements OnInit, NoteEntry {
 
   addItem() {
     this.items.push(this.createItem());
+  }
+
+  deleteThis() {
+    this.deleted.emit();
   }
 
   deleteItem(index: number) {

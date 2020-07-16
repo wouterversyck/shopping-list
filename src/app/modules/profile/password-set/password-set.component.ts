@@ -23,6 +23,8 @@ enum ValidationErrors {
 })
 export class PasswordSetComponent implements OnInit, OnDestroy {
   progressBarColor = 'warn';
+  private token = '';
+  private alive = true;
 
   userForm = new FormGroup({
     password: new FormControl('', [
@@ -32,10 +34,6 @@ export class PasswordSetComponent implements OnInit, OnDestroy {
   }, {
     validators: CustomValidators.passwordsMatch('password', 'confirmPassword')
   });
-
-  private token: string;
-
-  private alive = true;
 
   constructor(
     private snackBarService: SnackBarService,

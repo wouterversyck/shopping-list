@@ -5,14 +5,22 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillModule } from 'ngx-quill';
+import { Pipe, PipeTransform } from '@angular/core';
 
 describe('RichTextComponent', () => {
   let component: RichTextComponent;
   let fixture: ComponentFixture<RichTextComponent>;
 
+  @Pipe({name: 'safeHtml'})
+  class MockPipe implements PipeTransform {
+    transform(value: number): number {
+      return value;
+    }
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RichTextComponent ],
+      declarations: [ RichTextComponent, MockPipe ],
       imports: [
         ReactiveFormsModule,
         MaterialModule,
