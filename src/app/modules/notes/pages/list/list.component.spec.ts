@@ -4,7 +4,7 @@ import { ListComponent } from './list.component';
 import { MaterialModule } from '@app/modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
-import { NotesService } from '@app/modules/notes/services/notes.service';
+import { NotesService } from '@app/modules/notes/services/notes/notes.service';
 
 describe('ListComponent', () => {
   let component: ListComponent;

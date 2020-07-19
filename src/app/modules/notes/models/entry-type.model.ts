@@ -1,5 +1,6 @@
 export enum EntryType {
   RICH_TEXT = 'RICH_TEXT',
+  LINK = 'LINK',
   CHECK_LIST = 'CHECK_LIST',
   CHECK_LIST_ITEM = 'CHECK_LIST_ITEM'
 }

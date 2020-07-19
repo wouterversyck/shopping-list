@@ -4,6 +4,7 @@ import { NotesService } from './notes.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Note } from '@app/modules/notes/models/note.model';
 import { EntryType } from '@app/modules/notes/models/entry-type.model';
+import { RichText } from '@app/modules/notes/models/rich-text.model';
 
 describe('NotesService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -28,14 +29,7 @@ describe('NotesService', () => {
         name: 'NAME',
         contributors: [1],
         owner: 1,
-        items: [
-          {
-            contents: 'CONTENTS_ITEM',
-            checked: false,
-            entryType: EntryType.RICH_TEXT,
-            children: []
-          }
-        ]
+        items: [new RichText()]
       }];
 
       service.getAll().subscribe((response: Note[]) => {

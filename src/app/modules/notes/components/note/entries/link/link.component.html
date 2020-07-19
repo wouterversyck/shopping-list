@@ -1,0 +1,11 @@
+<mat-card-content>
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+        <input matInput type="url" formControlName="url" required>
+      <mat-icon matSuffix (click)="deleteThis()">delete</mat-icon>
+    </mat-form-field>
+    <div *ngIf="(linkPreview | async)">
+      <img *ngIf="(linkPreview | async)" alt="link preview" src="{{(linkPreview  | async).url}}">
+    </div>
+  </form>
+</mat-card-content>

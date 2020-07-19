@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditNoteComponent } from './edit-note.component';
-import { NotesService } from '@app/modules/notes/services/notes.service';
+import { NotesService } from '@app/modules/notes/services/notes/notes.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { Note } from '@app/modules/notes/models/note.model';
 
 describe('EditNoteComponent', () => {

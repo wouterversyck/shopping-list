@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoteComponent } from './note.component';
 import { Note } from '@app/modules/notes/models/note.model';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NotesService } from '@app/modules/notes/services/notes.service';
+import { NotesService } from '@app/modules/notes/services/notes/notes.service';
 import { of } from 'rxjs';
 import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,17 +18,10 @@ describe('NoteComponent', () => {
     saveNote: (note: Note) => of()
   };
 
-  @Pipe({name: 'safeHtml'})
-  class MockPipe implements PipeTransform {
-    transform(value: number): number {
-      return value;
-    }
-  }
-
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ NoteComponent, MockPipe ],
+      declarations: [ NoteComponent ],
       providers: [ { provide: NotesService, useValue: mockNotesService } ],
       imports: [
         ReactiveFormsModule,

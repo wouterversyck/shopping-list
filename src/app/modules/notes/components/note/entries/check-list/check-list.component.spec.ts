@@ -5,6 +5,7 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular
 import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Entry } from '@app/modules/notes/models/entry.model';
+import { CheckList } from '@app/modules/notes/models/check-list.model';
 
 describe('CheckListComponent', () => {
   let component: CheckListComponent;
@@ -25,17 +26,9 @@ describe('CheckListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckListComponent);
     component = fixture.componentInstance;
-    component.entry = new FormGroup({
-      contents: new FormControl('test'),
-      entryType: new FormControl('SHOPPING_LIST_ITEM'),
-      checked: new FormControl(true),
-      children: new FormArray([
-        new FormGroup({
-          contents: new FormControl('test'),
-          entryType: new FormControl('SHOPPING_LIST_ITEM'),
-          checked: new FormControl(true)
-        })])
-    });
+    component.entry = new CheckList();
+    component.parentFormArray = new FormArray([]);
+
     fixture.detectChanges();
   });
 

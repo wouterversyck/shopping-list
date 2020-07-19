@@ -1,3 +1,12 @@
 .mat-card-content {
-  border: 1px solid darkgrey;
+  border-bottom: 1px solid darkgrey;
+  padding: 5px;
+}
+
+.button-container {
+  text-align: right;
+}
+
+.mat-checkbox {
+  padding-right: 5px;
 }

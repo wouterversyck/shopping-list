@@ -1,7 +1,7 @@
 <mat-card routerLink="{{note.id}}">
   <mat-card-header>
     <h2>{{ note.name }}</h2>
-    <mat-icon (click)="delete()" matSuffix>delete</mat-icon>
+    <mat-icon (click)="delete($event)" matSuffix>delete</mat-icon>
   </mat-card-header>
   <mat-card-content>
     <ng-template appAddHost></ng-template>

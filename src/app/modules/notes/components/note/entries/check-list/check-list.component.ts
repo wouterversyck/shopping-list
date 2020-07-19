@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Entry } from '@app/modules/notes/models/entry.model';
 import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
 import { EntryType } from '@app/modules/notes/models/entry-type.model';
+import { CheckList } from '@app/modules/notes/models/check-list.model';
+import { CheckListItem } from '@app/modules/notes/models/check-list-item.model';
 
 @Component({
   selector: 'app-check-list',
@@ -10,46 +11,52 @@ import { EntryType } from '@app/modules/notes/models/entry-type.model';
   styleUrls: ['./check-list.component.scss']
 })
 export class CheckListComponent implements OnInit, NoteEntry {
-  @Input() entry: FormGroup;
-  @Output() deleted = new EventEmitter<void>();
+  @Input() entry: CheckList;
+  @Input() parentFormArray: FormArray;
+  @Output() deleted = new EventEmitter<any>();
+
+  formGroup: FormGroup;
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    if (!this.items.push) {
-      this.entry.controls.children = this.formBuilder.array(
-        [this.formBuilder.group(new Entry(EntryType.CHECK_LIST_ITEM))]
-      );
-    }
+    this.formGroup = this.formBuilder.group({
+      entryType: this.entry.entryType,
+      name: this.entry.name,
+      items: this.formBuilder.array(this.entry.items.map(e => this.formBuilder.group(e)))
+    });
+    this.parentFormArray.push(this.formGroup);
   }
 
   addItem() {
-    this.items.push(this.createItem());
+    this.formChecklistItems.push(this.createItem());
   }
 
   deleteThis() {
-    this.deleted.emit();
+    this.deleted.emit(this);
   }
 
   deleteItem(index: number) {
-    this.items.removeAt(index);
+    this.formChecklistItems.removeAt(index);
   }
 
   private createItem(): FormGroup {
     return this.formBuilder.group({
       checked: false,
-      contents: '',
+      entryType: EntryType.CHECK_LIST_ITEM,
+      name: '',
     });
   }
 
-  get items(): FormArray {
-    return this.entry.controls.children as FormArray;
+  get formChecklistItems(): FormArray {
+    return this.formGroup.controls.items as FormArray;
   }
 
-  getCheckedItems(items: Entry[]) {
+  getCheckedItems(items: CheckListItem[]) {
     return items.filter(e => e.checked);
   }
 
-  getUnCheckedItems(items: Entry[]) {
+  getUnCheckedItems(items: CheckListItem[]) {
     return items.filter(e => !e.checked);
   }
 }

@@ -15,7 +15,8 @@ export class PreviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  delete() {
+  delete(event: MouseEvent) {
+    event.stopPropagation();
     this.deleted.emit(this.note.id);
   }
 

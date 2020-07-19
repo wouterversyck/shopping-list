@@ -1,6 +1,9 @@
 <mat-card-content>
-  <form *ngIf="editMode" [formGroup]="entry" (ngSubmit)="toggleEditMode()">
-    <quill-editor *ngIf="editMode" formControlName="contents" required>
+  <div class="button-container">
+    <mat-icon (click)="deleteThis()">delete</mat-icon>
+  </div>
+  <form *ngIf="editMode" [formGroup]="formGroup">
+    <quill-editor formControlName="contents">
       <div quill-editor-toolbar>
         <select class="ql-size" [title]="'Size'">
           <option value="small"></option>
@@ -67,9 +70,8 @@
         </span>
       </div>
     </quill-editor>
-    <button type="submit" mat-button mat-raised-button>Done</button>
   </form>
-  <mat-icon matSuffix (click)="deleteThis()">delete</mat-icon>
-  <div class="ql-editor" [innerHTML]="contents | safeHtml" (click)="toggleEditMode()" *ngIf="!editMode"></div>
+  <quill-view-html *ngIf="!editMode" [content]="contents" format="text" theme="snow">
+  </quill-view-html>
 </mat-card-content>
 

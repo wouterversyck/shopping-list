@@ -1,17 +1,14 @@
 <mat-card-content>
-  <form [formGroup]="entry">
-      <mat-form-field>
-        <mat-card-title>
-          <input matInput type="text" formControlName="contents" required>
-        </mat-card-title>
-        <mat-icon matSuffix (click)="deleteThis()">delete</mat-icon>
-      </mat-form-field>
-    <div formArrayName="children"
-         *ngFor="let item of items.controls; let i = index;">
+  <div class="button-container">
+    <mat-icon (click)="deleteThis()">delete</mat-icon>
+  </div>
+  <form [formGroup]="formGroup">
+    <div formArrayName="items"
+         *ngFor="let item of formChecklistItems.controls; let i = index;">
       <div [formGroupName]="i">
         <mat-form-field>
           <mat-checkbox matPrefix formControlName="checked"></mat-checkbox>
-          <input matInput formControlName="contents">
+          <input matInput formControlName="name">
           <mat-icon matSuffix (click)="deleteItem(i)">clear</mat-icon>
         </mat-form-field>
       </div>
