@@ -85,11 +85,11 @@ export class NoteComponent implements OnInit {
   }
 
   private constructDynamicComponents() {
-    if(!this.items) {
+    if (!this.items) {
       return;
     }
 
-    return this.note.items
+    this.note.items
       .map(e => this.addEntry(e));
   }
 
