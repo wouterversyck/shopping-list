@@ -1,20 +1,25 @@
 <mat-card-content>
+  <div>
+    <mat-icon (click)="movedUp.emit()">arrow_drop_up</mat-icon>
+    <mat-icon (click)="movedDown.emit()">arrow_drop_down</mat-icon>
+  </div>
   <div class="button-container">
     <mat-icon (click)="deleteThis()">delete</mat-icon>
   </div>
-  <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup" cdkDropList (cdkDropListDropped)="drop($event)">
     <div formArrayName="items"
          *ngFor="let item of formChecklistItems.controls; let i = index;">
-      <div [formGroupName]="i">
+      <div [formGroupName]="i" cdkDrag>
         <mat-form-field>
+          <mat-icon class="drag-icon" cdkDragHandle matPrefix>drag_indicator</mat-icon>
           <mat-checkbox matPrefix formControlName="checked"></mat-checkbox>
-          <input matInput formControlName="name">
+          <input #input matInput formControlName="name" (keyup.enter)="addItem()">
           <mat-icon matSuffix (click)="deleteItem(i)">clear</mat-icon>
         </mat-form-field>
       </div>
     </div>
-    <button mat-button (click)="addItem()">
-      <mat-icon>add</mat-icon>
-    </button>
   </form>
+  <button mat-button (click)="addItem()">
+    <mat-icon>add</mat-icon>
+  </button>
 </mat-card-content>

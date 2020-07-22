@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NoteEntry } from '@app/modules/notes/components/note/note-entry.interface';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { RichText } from '@app/modules/notes/models/rich-text.model';
 
@@ -12,6 +12,8 @@ export class RichTextComponent implements OnInit, NoteEntry {
   @Input() entry: RichText;
   @Input() parentFormArray: FormArray;
   @Output() deleted = new EventEmitter<any>();
+  @Output() movedUp = new EventEmitter<NoteEntry>();
+  @Output() movedDown = new EventEmitter<NoteEntry>();
 
   editMode = false;
   formGroup: FormGroup;

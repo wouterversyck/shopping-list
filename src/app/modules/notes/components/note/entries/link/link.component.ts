@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { LinkPreviewService } from '@app/modules/notes/services/link-preview/link-preview.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
+import { NoteEntry } from '@app/modules/notes/components/note/note-entry.interface';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LinkPreview } from '@app/modules/notes/models/link-preview.model';
@@ -15,6 +15,8 @@ export class LinkComponent implements OnInit, NoteEntry {
   @Input() entry: LinkPreview;
   @Input() parentFormArray: FormArray;
   @Output() deleted = new EventEmitter<any>();
+  @Output() movedUp = new EventEmitter<NoteEntry>();
+  @Output() movedDown = new EventEmitter<NoteEntry>();
 
   linkPreview: Observable<LinkPreview>;
   formGroup: FormGroup;

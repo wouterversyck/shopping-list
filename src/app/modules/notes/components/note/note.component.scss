@@ -2,3 +2,10 @@
   width: 100%;
   min-width: 300px;
 }
+
+.float {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  z-index: 100;
+}

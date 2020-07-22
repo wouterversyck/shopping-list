@@ -1,4 +1,8 @@
 <mat-card-content>
+  <div>
+    <mat-icon (click)="movedUp.emit()">arrow_drop_up</mat-icon>
+    <mat-icon (click)="movedDown.emit()">arrow_drop_down</mat-icon>
+  </div>
   <div class="button-container">
     <mat-icon (click)="deleteThis()">delete</mat-icon>
   </div>

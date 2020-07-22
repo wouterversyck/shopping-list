@@ -1,21 +1,37 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  QueryList, SimpleChanges, ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
+import { NoteEntry } from '@app/modules/notes/components/note/note-entry.interface';
 import { EntryType } from '@app/modules/notes/models/entry-type.model';
 import { CheckList } from '@app/modules/notes/models/check-list.model';
-import { CheckListItem } from '@app/modules/notes/models/check-list-item.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-check-list',
   templateUrl: './check-list.component.html',
   styleUrls: ['./check-list.component.scss']
 })
-export class CheckListComponent implements OnInit, NoteEntry {
+export class CheckListComponent implements OnInit, AfterViewChecked, NoteEntry {
   @Input() entry: CheckList;
   @Input() parentFormArray: FormArray;
   @Output() deleted = new EventEmitter<any>();
+  @Output() movedUp = new EventEmitter<NoteEntry>();
+  @Output() movedDown = new EventEmitter<NoteEntry>();
 
+  @ViewChildren('input') inputs: QueryList<ElementRef>;
   formGroup: FormGroup;
+
+  itemAdded = false;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -29,7 +45,9 @@ export class CheckListComponent implements OnInit, NoteEntry {
   }
 
   addItem() {
-    this.formChecklistItems.push(this.createItem());
+    const item = this.createItem();
+    this.formChecklistItems.push(item);
+    this.itemAdded = true;
   }
 
   deleteThis() {
@@ -38,6 +56,10 @@ export class CheckListComponent implements OnInit, NoteEntry {
 
   deleteItem(index: number) {
     this.formChecklistItems.removeAt(index);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.formChecklistItems.controls, event.previousIndex, event.currentIndex);
   }
 
   private createItem(): FormGroup {
@@ -52,11 +74,11 @@ export class CheckListComponent implements OnInit, NoteEntry {
     return this.formGroup.controls.items as FormArray;
   }
 
-  getCheckedItems(items: CheckListItem[]) {
-    return items.filter(e => e.checked);
+  ngAfterViewChecked(): void {
+    if (this.itemAdded) {
+      this.itemAdded = false;
+      this.inputs.last.nativeElement.focus();
+    }
   }
 
-  getUnCheckedItems(items: CheckListItem[]) {
-    return items.filter(e => !e.checked);
-  }
 }

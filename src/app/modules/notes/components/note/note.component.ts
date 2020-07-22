@@ -1,11 +1,17 @@
-import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Input,
+  OnInit,
+  ViewChild, ViewRef
+} from '@angular/core';
 import { Note } from '@app/modules/notes/models/note.model';
 import { AddHostDirective } from '@shared/directives/add-host/add-host.directive';
-import { Entry } from '@app/modules/notes/models/entry.model';
-import { NoteEntry } from '@app/modules/notes/components/note-entry.interface';
+import { NoteEntry } from '@app/modules/notes/components/note/note-entry.interface';
 import { RichTextComponent } from '@app/modules/notes/components/note/entries/rich-text/rich-text.component';
 import { CheckListComponent } from '@app/modules/notes/components/note/entries/check-list/check-list.component';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NotesService } from '@app/modules/notes/services/notes/notes.service';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,6 +21,8 @@ import { LinkComponent } from '@app/modules/notes/components/note/entries/link/l
 import { RichText } from '@app/modules/notes/models/rich-text.model';
 import { CheckList } from '@app/modules/notes/models/check-list.model';
 import { LinkPreview } from '@app/modules/notes/models/link-preview.model';
+import { Entry } from '@app/modules/notes/models/entry.model';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-note',
@@ -24,6 +32,7 @@ import { LinkPreview } from '@app/modules/notes/models/link-preview.model';
 export class NoteComponent implements OnInit {
   @Input() note: Note;
   form: FormGroup;
+  @ViewChild('list', {static: true}) listHtml: HTMLElement;
   @ViewChild(AddHostDirective, {static: true}) adHost: AddHostDirective;
 
   entryMap = new Map<EntryType, any>([
@@ -49,7 +58,6 @@ export class NoteComponent implements OnInit {
       .open(CreateNoteEntryComponent)
       .afterClosed().subscribe((result: EntryType) => {
         const entry = new (this.entryMap.get(result).entry)();
-        this.note.items.push(entry);
         this.addEntry(entry);
     });
   }
@@ -85,7 +93,7 @@ export class NoteComponent implements OnInit {
   }
 
   private constructDynamicComponents() {
-    if (!this.items) {
+    if (!this.note.items) {
       return;
     }
 
@@ -94,32 +102,56 @@ export class NoteComponent implements OnInit {
   }
 
   private addEntry(entry: Entry) {
-    const component = this.getComponentFromEntryType(entry.entryType);
+    const componentRef = this.getComponentFromEntry(entry.entryType);
+    const component = componentRef.instance as NoteEntry;
+
     component.entry = entry;
-    component.parentFormArray = this.items;
+    component.parentFormArray = this.formItems;
     component.deleted.subscribe(e => this.delete(e));
+    component.movedDown.subscribe(e => this.moveComponentDown(componentRef.hostView));
+    component.movedUp.subscribe(e => this.moveComponentUp(componentRef.hostView));
+
     return component;
   }
 
-  private getComponentFromEntryType(entryType: EntryType): NoteEntry {
+  private getComponentFromEntry(entryType: EntryType): ComponentRef<unknown> {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       this.entryMap.get(entryType).component
     );
-    const componentRef = this.adHost.viewContainerRef.createComponent(componentFactory);
-    return componentRef.instance as NoteEntry;
+    return this.adHost.viewContainerRef.createComponent(componentFactory);
+  }
+
+  private moveComponentDown(hostView: ViewRef) {
+    const previousIndex = this.adHost.viewContainerRef.indexOf(hostView);
+    const newIndex = previousIndex < this.adHost.viewContainerRef.length ? previousIndex + 1 : previousIndex;
+
+    this.moveFormItemAndComponent(previousIndex, newIndex, this.formItems.at(previousIndex), hostView);
+  }
+
+  private moveComponentUp(hostView: ViewRef) {
+    const previousIndex = this.adHost.viewContainerRef.indexOf(hostView);
+    const newIndex = previousIndex > 0 ? previousIndex - 1 : previousIndex;
+
+    this.moveFormItemAndComponent(previousIndex, newIndex, this.formItems.at(previousIndex), hostView);
+  }
+
+  private moveFormItemAndComponent(previousIndex: number, newIndex: number, formItem: AbstractControl, viewRef: ViewRef) {
+    if (previousIndex === newIndex) {
+      return;
+    }
+
+    this.adHost.viewContainerRef.move(viewRef, newIndex);
+    this.formItems.removeAt(previousIndex);
+    this.formItems.insert(newIndex, formItem);
   }
 
   private delete(component: any) {
-    this.items.clear();
-
-    const index = this.items.controls.indexOf(component);
-    this.note.items.splice(index, 1);
-
-    this.adHost.viewContainerRef.clear();
-    this.constructDynamicComponents();
+    const index = this.formItems.controls.indexOf(component.formGroup);
+    this.adHost.viewContainerRef.remove(index);
+    this.formItems.removeAt(index);
   }
 
-  get items(): FormArray {
+  get formItems(): FormArray {
     return (this.form.controls.items as FormArray);
   }
 

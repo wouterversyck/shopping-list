@@ -23,6 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [],
@@ -50,7 +51,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDividerModule,
     MatSlideToggleModule,
     MatProgressBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    DragDropModule
   ],
   exports: [
     MatMenuModule,
@@ -75,7 +77,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDividerModule,
     MatSlideToggleModule,
     MatProgressBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    DragDropModule
   ]
 })
 export class MaterialModule { }
