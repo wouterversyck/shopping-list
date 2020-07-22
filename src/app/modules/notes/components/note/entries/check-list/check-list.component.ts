@@ -59,7 +59,9 @@ export class CheckListComponent implements OnInit, AfterViewChecked, NoteEntry {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.formChecklistItems.controls, event.previousIndex, event.currentIndex);
+    const formItem = this.formChecklistItems.at(event.previousIndex);
+    this.formChecklistItems.removeAt(event.previousIndex);
+    this.formChecklistItems.insert(event.currentIndex, formItem);
   }
 
   private createItem(): FormGroup {
