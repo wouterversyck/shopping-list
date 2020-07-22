@@ -1,12 +1,16 @@
 <mat-card-content>
-  <div>
-    <mat-icon (click)="movedUp.emit()">arrow_drop_up</mat-icon>
-    <mat-icon (click)="movedDown.emit()">arrow_drop_down</mat-icon>
+  <div class="float-container">
+    <div class="float-left">
+      <mat-icon (click)="movedUp.emit()">arrow_drop_up</mat-icon>
+      <mat-icon (click)="movedDown.emit()">arrow_drop_down</mat-icon>
+    </div>
+    <div class="float-right">
+      <mat-icon (click)="deleteThis()">delete</mat-icon>
+    </div>
   </div>
   <form [formGroup]="formGroup">
     <mat-form-field>
       <input matInput type="url" formControlName="url" required>
-      <mat-icon matSuffix (click)="deleteThis()">delete</mat-icon>
     </mat-form-field>
     <div *ngIf="(linkPreview | async)">
       <img *ngIf="(linkPreview | async)" alt="link preview" src="{{(linkPreview  | async).url}}">

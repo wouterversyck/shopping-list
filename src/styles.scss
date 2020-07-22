@@ -8,3 +8,25 @@ body {
 .mat-icon {
   cursor: pointer;
 }
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-container {
+  position: relative;
+  margin-bottom: 7px;
+}
+
+.float-container::after {
+  content: "";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+

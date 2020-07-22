@@ -2,14 +2,14 @@
   background: white;
 }
 
-.ql-editor code {
-  background: red;
+.ql-editor {
+  code {
+    background: red;
+  }
+
+  padding-top: 0;
 }
 
 .mat-card-content {
-  border-bottom: 1px solid darkgrey;
-}
-
-.button-container {
-  text-align: right;
+  margin-bottom: 25px;
 }

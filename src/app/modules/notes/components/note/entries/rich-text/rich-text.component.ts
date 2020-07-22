@@ -30,6 +30,16 @@ export class RichTextComponent implements OnInit, NoteEntry {
     this.deleted.emit(this);
   }
 
+  moveUp(event: MouseEvent) {
+    event.stopPropagation();
+    this.movedUp.emit();
+  }
+
+  moveDown(event: MouseEvent) {
+    event.stopPropagation();
+    this.movedDown.emit();
+  }
+
   @HostListener('document:click', ['$event'])
   clickOut(event) {
     this.editMode = !!this.eRef.nativeElement.contains(event.target);

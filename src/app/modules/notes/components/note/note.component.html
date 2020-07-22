@@ -1,11 +1,11 @@
 <mat-card>
-  <mat-card-header>
-    <form [formGroup]="form">
+  <form [formGroup]="form">
+    <h3>
       <mat-form-field>
         <input matInput formControlName="name">
       </mat-form-field>
-    </form>
-  </mat-card-header>
+    </h3>
+  </form>
   <div #list>
     <ng-template appAddHost></ng-template>
   </div>

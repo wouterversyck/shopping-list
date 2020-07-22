@@ -1,10 +1,12 @@
 <mat-card-content>
-  <div>
-    <mat-icon (click)="movedUp.emit()">arrow_drop_up</mat-icon>
-    <mat-icon (click)="movedDown.emit()">arrow_drop_down</mat-icon>
-  </div>
-  <div class="button-container">
-    <mat-icon (click)="deleteThis()">delete</mat-icon>
+  <div class="float-container">
+    <div class="float-left">
+      <mat-icon (click)="moveUp($event)">arrow_drop_up</mat-icon>
+      <mat-icon (click)="moveDown($event)">arrow_drop_down</mat-icon>
+    </div>
+    <div class="float-right">
+      <mat-icon (click)="deleteThis()">delete</mat-icon>
+    </div>
   </div>
   <form *ngIf="editMode" [formGroup]="formGroup">
     <quill-editor formControlName="contents">
@@ -75,7 +77,7 @@
       </div>
     </quill-editor>
   </form>
-  <quill-view-html *ngIf="!editMode" [content]="contents" format="text" theme="snow">
+  <quill-view-html *ngIf="!editMode" [content]="contents" theme="snow">
   </quill-view-html>
 </mat-card-content>
 

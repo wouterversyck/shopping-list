@@ -1,12 +1,32 @@
 .mat-card-content {
-  border-bottom: 1px solid darkgrey;
   padding: 5px;
-}
-
-.button-container {
-  text-align: right;
+  margin-bottom: 25px;
 }
 
 .mat-checkbox, .drag-icon {
   padding-right: 5px;
+}
+
+.mat-form-field {
+  display: block;
+}
+
+:host ::ng-deep {
+  .checklist-form-field {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+}
+
+.mat-icon {
+  vertical-align: middle;
+}
+
+.mat-button {
+  margin-left: 10px;
+  margin-top: 5px;
 }
