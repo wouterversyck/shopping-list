@@ -123,7 +123,7 @@ export class NoteComponent implements OnInit {
 
   private moveComponentDown(hostView: ViewRef) {
     const previousIndex = this.adHost.viewContainerRef.indexOf(hostView);
-    const newIndex = previousIndex < this.adHost.viewContainerRef.length ? previousIndex + 1 : previousIndex;
+    const newIndex = previousIndex < this.adHost.viewContainerRef.length - 1 ? previousIndex + 1 : previousIndex;
 
     this.moveFormItemAndComponent(previousIndex, newIndex, this.formItems.at(previousIndex), hostView);
   }
