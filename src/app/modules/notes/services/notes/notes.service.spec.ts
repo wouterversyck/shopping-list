@@ -3,7 +3,6 @@ import { inject, TestBed } from '@angular/core/testing';
 import { NotesService } from './notes.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Note } from '@app/modules/notes/models/note.model';
-import { EntryType } from '@app/modules/notes/models/entry-type.model';
 import { RichText } from '@app/modules/notes/models/rich-text.model';
 
 describe('NotesService', () => {

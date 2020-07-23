@@ -14,15 +14,12 @@ import { CheckListComponent } from '@app/modules/notes/components/note/entries/c
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NotesService } from '@app/modules/notes/services/notes/notes.service';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { CreateNoteEntryComponent } from '@app/modules/notes/components/dialogs/create-note-entry/create-note-entry.component';
 import { EntryType } from '@app/modules/notes/models/entry-type.model';
 import { LinkComponent } from '@app/modules/notes/components/note/entries/link/link.component';
 import { RichText } from '@app/modules/notes/models/rich-text.model';
 import { CheckList } from '@app/modules/notes/models/check-list.model';
 import { LinkPreview } from '@app/modules/notes/models/link-preview.model';
 import { Entry } from '@app/modules/notes/models/entry.model';
-import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-note',
@@ -41,11 +38,25 @@ export class NoteComponent implements OnInit {
     [EntryType.LINK, { component: LinkComponent, entry: LinkPreview }]
   ]);
 
+  fabButtons = [
+    {
+      icon: 'text_format',
+      action: () => this.addItemToViewAndSyncServer(EntryType.RICH_TEXT)
+    },
+    {
+      icon: 'check',
+      action: () => this.addItemToViewAndSyncServer(EntryType.CHECK_LIST)
+    },
+    {
+      icon: 'link',
+      action: () => this.addItemToViewAndSyncServer(EntryType.LINK)
+    }
+  ];
+
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private formBuilder: FormBuilder,
-    private notesService: NotesService,
-    private dialog: MatDialog) { }
+    private notesService: NotesService) { }
 
   ngOnInit() {
     this.constructForm();
@@ -53,13 +64,9 @@ export class NoteComponent implements OnInit {
     this.wireFormToService();
   }
 
-  addItemToViewAndSyncServer() {
-    this.dialog
-      .open(CreateNoteEntryComponent)
-      .afterClosed().subscribe((result: EntryType) => {
-        const entry = new (this.entryMap.get(result).entry)();
-        this.addEntry(entry);
-    });
+  addItemToViewAndSyncServer(type: EntryType) {
+      const entry = new (this.entryMap.get(type).entry)();
+      this.addEntry(entry);
   }
 
   private constructForm() {
