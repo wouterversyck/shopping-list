@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { FooterComponent } from './root-layouts/footer/footer.component';
 import { HeaderComponent } from './root-layouts/header/header.component';
@@ -16,6 +16,8 @@ import { NavigationComponent } from './root-layouts/navigation/navigation.compon
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { QuillModule } from 'ngx-quill';
+import { ErrorHandlerInterceptor } from '@core/interceptors/error-handler.interceptor';
+import { LoaderComponent } from './root-layouts/loader/loader/loader.component';
 
 
 if (environment.production) {
@@ -38,7 +40,8 @@ export class SentryErrorHandler implements ErrorHandler {
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    NavigationComponent
+    NavigationComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,9 @@ export class SentryErrorHandler implements ErrorHandler {
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
-  providers: [{provide: ErrorHandler, useClass: environment.production ? SentryErrorHandler : ErrorHandler}],
+  providers: [
+    { provide: ErrorHandler, useClass: environment.production ? SentryErrorHandler : ErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

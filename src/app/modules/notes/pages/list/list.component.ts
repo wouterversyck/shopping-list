@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NotesService } from '@app/modules/notes/services/notes/notes.service';
 import { Note } from '@app/modules/notes/models/note.model';
+import { LoaderService } from '@core/services/loader/loader.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -10,7 +12,9 @@ import { Note } from '@app/modules/notes/models/note.model';
 export class ListComponent implements OnInit {
   notes: Note[];
 
-  constructor(private notesService: NotesService) { }
+  constructor(
+    private notesService: NotesService,
+    private loaderService: LoaderService) { }
 
   ngOnInit() {
     this.getAllNotes();
@@ -22,7 +26,14 @@ export class ListComponent implements OnInit {
       .subscribe(this.getAllNotes);
   }
 
-  getAllNotes = () => this.notesService.getAll().subscribe(e => this.notes = e);
+  getAllNotes = () => {
+    this.loaderService.show();
+    this.notesService.getAll()
+      .pipe(
+        finalize(() => this.loaderService.hide())
+      )
+      .subscribe(e => this.notes = e);
+  }
 
   addNote() {
     this.notesService.save(new Note())
