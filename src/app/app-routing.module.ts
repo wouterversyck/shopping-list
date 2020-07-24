@@ -5,11 +5,9 @@ import { AdminGuard } from '@core/guards/admin/admin.guard';
 
 const routes: Routes = [
   {
-    path: '', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
-    canActivate: [LoginGuard],
-    data: {
-      authGuardRedirect: '/login'
-    },
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'list'
   },
   {
     path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule)

@@ -11,7 +11,6 @@ import { SharedModule } from '../shared/shared.module';
 import { CheckListComponent } from './components/note/entries/check-list/check-list.component';
 import { RichTextComponent } from './components/note/entries/rich-text/rich-text.component';
 import { QuillModule } from 'ngx-quill';
-import { PreviewComponent } from './components/preview/preview.component';
 import { EditNoteComponent } from './pages/edit-note/edit-note.component';
 import { LinkComponent } from './components/note/entries/link/link.component';
 import { LinkPreviewService } from './services/link-preview/link-preview.service';
@@ -22,7 +21,6 @@ import { LinkPreviewService } from './services/link-preview/link-preview.service
     NoteComponent,
     CheckListComponent,
     RichTextComponent,
-    PreviewComponent,
     EditNoteComponent,
     LinkComponent
   ],

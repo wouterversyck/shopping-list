@@ -16,7 +16,8 @@ export class ListComponent implements OnInit {
     this.getAllNotes();
   }
 
-  deleteNote(id) {
+  deleteNote(event: MouseEvent, id: string) {
+    event.stopPropagation();
     this.notesService.delete(id)
       .subscribe(this.getAllNotes);
   }

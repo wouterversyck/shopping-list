@@ -11,9 +11,38 @@
 
 .card {
   display: inline-block;
-  margin-right: 50px;
-  height: 150px;
+  margin: 15px;
+  width: 200px;
+  height: 250px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  position: relative;
+
+  mat-icon {
+    position: absolute;
+    z-index: 999;
+    right: 0;
+  }
+}
+
+.note-overlay {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+app-note {
+  pointer-events: none;
+}
+
+::ng-deep .card app-note {
+  mat-icon, .fab-container {
+    display: none;
+  }
+  .mat-form-field-underline {
+    display: none;
+  }
 }
 
