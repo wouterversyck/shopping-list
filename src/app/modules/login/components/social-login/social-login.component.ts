@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthenticationService } from '@core/services/authentication/authentication.service';
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-social-login',
   templateUrl: './social-login.component.html',
   styleUrls: ['./social-login.component.scss']
 })
-export class SocialLoginComponent implements OnInit {
+export class SocialLoginComponent implements OnInit, OnDestroy {
 
   userSubject = new BehaviorSubject<SocialUser>(null);
+
+  socialLoginSub: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -21,8 +23,12 @@ export class SocialLoginComponent implements OnInit {
     private snackBar: SnackBarService,
     private router: Router) { }
 
+  ngOnDestroy(): void {
+    this.socialLoginSub.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.authService.authState.subscribe(result => this.userSubject.next(result));
+    this.socialLoginSub = this.authService.authState.subscribe(result => this.userSubject.next(result));
   }
 
   signInWithGoogle(): void {

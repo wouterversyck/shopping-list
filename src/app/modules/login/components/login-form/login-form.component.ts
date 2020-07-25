@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication/authentication.service';
 import { map, takeWhile } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -21,11 +22,13 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   alive = true;
 
+  formSub: Subscription;
+
   constructor(private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     // trim the values when they change
-    this.userForm.valueChanges.pipe(
+    this.formSub = this.userForm.valueChanges.pipe(
       takeWhile(() => this.alive),
       map(value => {
         value.username = (value.username as string).trim();
@@ -54,5 +57,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.alive = false;
+    this.formSub.unsubscribe();
   }
 }

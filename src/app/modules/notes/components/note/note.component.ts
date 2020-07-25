@@ -2,7 +2,7 @@ import {
   Component,
   ComponentFactoryResolver,
   ComponentRef,
-  Input,
+  Input, OnDestroy,
   OnInit,
   ViewChild, ViewRef
 } from '@angular/core';
@@ -20,17 +20,20 @@ import { RichText } from '@app/modules/notes/models/rich-text.model';
 import { CheckList } from '@app/modules/notes/models/check-list.model';
 import { LinkPreview } from '@app/modules/notes/models/link-preview.model';
 import { Entry } from '@app/modules/notes/models/entry.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-note',
   templateUrl: './note.component.html',
   styleUrls: ['./note.component.scss']
 })
-export class NoteComponent implements OnInit {
+export class NoteComponent implements OnInit, OnDestroy {
   @Input() note: Note;
   form: FormGroup;
   @ViewChild('list', {static: true}) listHtml: HTMLElement;
   @ViewChild(AddHostDirective, {static: true}) adHost: AddHostDirective;
+
+  subs: Subscription[] = [];
 
   entryMap = new Map<EntryType, any>([
     [EntryType.CHECK_LIST, { component: CheckListComponent, entry: CheckList }],
@@ -57,6 +60,10 @@ export class NoteComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private formBuilder: FormBuilder,
     private notesService: NotesService) { }
+
+  ngOnDestroy(): void {
+      this.subs.forEach(sub => sub.unsubscribe());
+  }
 
   ngOnInit() {
     this.constructForm();
@@ -88,7 +95,7 @@ export class NoteComponent implements OnInit {
   }
 
   private wireFormToService() {
-    this.form.valueChanges
+    this.subs.push(this.form.valueChanges
       .pipe(
         debounceTime(500),
         map(e => {
@@ -96,7 +103,7 @@ export class NoteComponent implements OnInit {
           return e;
         }),
         switchMap(this.notesService.save)
-      ).subscribe();
+      ).subscribe());
   }
 
   private constructDynamicComponents() {
@@ -114,9 +121,9 @@ export class NoteComponent implements OnInit {
 
     component.entry = entry;
     component.parentFormArray = this.formItems;
-    component.deleted.subscribe(e => this.delete(e));
-    component.movedDown.subscribe(e => this.moveComponentDown(componentRef.hostView));
-    component.movedUp.subscribe(e => this.moveComponentUp(componentRef.hostView));
+    this.subs.push(component.deleted.subscribe(e => this.delete(e)));
+    this.subs.push(component.movedDown.subscribe(e => this.moveComponentDown(componentRef.hostView)));
+    this.subs.push(component.movedUp.subscribe(e => this.moveComponentUp(componentRef.hostView)));
 
     return component;
   }

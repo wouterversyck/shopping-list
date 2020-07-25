@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { LinkPreviewService } from '@app/modules/notes/services/link-preview/link-preview.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NoteEntry } from '@app/modules/notes/components/note/note-entry.interface';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LinkPreview } from '@app/modules/notes/models/link-preview.model';
+import { LoaderService } from '@core/services/loader/loader.service';
 
 @Component({
   selector: 'app-link',
@@ -18,12 +19,15 @@ export class LinkComponent implements OnInit, NoteEntry {
   @Output() movedUp = new EventEmitter<NoteEntry>();
   @Output() movedDown = new EventEmitter<NoteEntry>();
 
+  urlRegex = 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)';
+
   linkPreview: Observable<LinkPreview>;
   formGroup: FormGroup;
 
   constructor(
     private linkPreviewService: LinkPreviewService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private loaderService: LoaderService) { }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group(this.entry);
@@ -33,11 +37,19 @@ export class LinkComponent implements OnInit, NoteEntry {
      .pipe(
        debounceTime(1500),
        distinctUntilChanged(),
-       switchMap(e => this.linkPreviewService.getLinkPreview(e)));
+       map(e => e.match('^https?://') ? e : 'https://' + e),
+       filter(value => value.match(this.urlRegex)),
+       tap(() => this.loaderService.show()),
+       switchMap(e => this.linkPreviewService.getLinkPreview(e)),
+       tap((val) => this.formGroup.patchValue(val)),
+       tap(() => this.loaderService.hide())
+     )
+      .pipe(
+        startWith(this.entry.image ? this.entry : null)
+      );
   }
 
   deleteThis() {
     this.deleted.emit(this);
   }
-
 }
