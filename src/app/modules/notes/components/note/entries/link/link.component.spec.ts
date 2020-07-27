@@ -2,8 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LinkComponent } from './link.component';
 import { LinkPreviewService } from '@app/modules/notes/services/link-preview/link-preview.service';
-import { FormArray, ReactiveFormsModule } from '@angular/forms';
-import { CheckList } from '@app/modules/notes/models/check-list.model';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LinkPreview } from '@app/modules/notes/models/link-preview.model';
 
 describe('LinkComponent', () => {
@@ -27,7 +26,7 @@ describe('LinkComponent', () => {
     fixture = TestBed.createComponent(LinkComponent);
     component = fixture.componentInstance;
     component.entry = new LinkPreview();
-    component.parentFormArray = new FormArray([]);
+    component.createForm();
 
     fixture.detectChanges();
   });

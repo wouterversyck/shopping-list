@@ -8,22 +8,20 @@ import { RichText } from '@app/modules/notes/models/rich-text.model';
   templateUrl: './rich-text.component.html',
   styleUrls: ['./rich-text.component.scss']
 })
-export class RichTextComponent implements OnInit, NoteEntry {
+export class RichTextComponent implements NoteEntry {
   @Input() entry: RichText;
-  @Input() parentFormArray: FormArray;
   @Output() deleted = new EventEmitter<any>();
   @Output() movedUp = new EventEmitter<NoteEntry>();
   @Output() movedDown = new EventEmitter<NoteEntry>();
 
   editMode = false;
-  formGroup: FormGroup;
+  form: FormGroup;
 
   constructor(private eRef: ElementRef,
               private formBuilder: FormBuilder) { }
 
-  ngOnInit(): void {
-    this.formGroup = this.formBuilder.group(this.entry);
-    this.parentFormArray.push(this.formGroup);
+  createForm(): FormGroup {
+    return this.form = this.formBuilder.group(this.entry);
   }
 
   deleteThis() {
@@ -46,7 +44,7 @@ export class RichTextComponent implements OnInit, NoteEntry {
   }
 
   get contents() {
-    return this.formGroup.controls.contents.value;
+    return this.form.controls.contents.value;
   }
 
 }

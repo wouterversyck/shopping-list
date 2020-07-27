@@ -1,10 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CheckListComponent } from './check-list.component';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/modules/material/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Entry } from '@app/modules/notes/models/entry.model';
 import { CheckList } from '@app/modules/notes/models/check-list.model';
 
 describe('CheckListComponent', () => {
@@ -27,7 +26,7 @@ describe('CheckListComponent', () => {
     fixture = TestBed.createComponent(CheckListComponent);
     component = fixture.componentInstance;
     component.entry = new CheckList();
-    component.parentFormArray = new FormArray([]);
+    component.createForm();
 
     fixture.detectChanges();
   });

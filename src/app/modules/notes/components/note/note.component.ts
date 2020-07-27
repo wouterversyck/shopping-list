@@ -66,8 +66,8 @@ export class NoteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.constructForm();
-    this.constructDynamicComponents();
+    const forms = this.constructDynamicComponents();
+    this.constructForm(new FormArray(forms));
     this.wireFormToService();
   }
 
@@ -76,13 +76,13 @@ export class NoteComponent implements OnInit, OnDestroy {
       this.addEntry(entry);
   }
 
-  private constructForm() {
+  private constructForm(forms: FormArray) {
     this.form = this.formBuilder.group({
       name: this.note.name,
       id: this.note.id,
       owner: this.note.owner,
       contributors: this.formBuilder.array(this.createContributors(this.note.contributors)),
-      items: this.formBuilder.array([])
+      items: forms
     });
   }
 
@@ -111,7 +111,7 @@ export class NoteComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.note.items
+    return this.note.items
       .map(e => this.addEntry(e));
   }
 
@@ -120,12 +120,11 @@ export class NoteComponent implements OnInit, OnDestroy {
     const component = componentRef.instance as NoteEntry;
 
     component.entry = entry;
-    component.parentFormArray = this.formItems;
     this.subs.push(component.deleted.subscribe(e => this.delete(e)));
-    this.subs.push(component.movedDown.subscribe(e => this.moveComponentDown(componentRef.hostView)));
-    this.subs.push(component.movedUp.subscribe(e => this.moveComponentUp(componentRef.hostView)));
+    this.subs.push(component.movedDown.subscribe(_ => this.moveComponentDown(componentRef.hostView)));
+    this.subs.push(component.movedUp.subscribe(_ => this.moveComponentUp(componentRef.hostView)));
 
-    return component;
+    return component.createForm();
   }
 
   private getComponentFromEntry(entryType: EntryType): ComponentRef<unknown> {

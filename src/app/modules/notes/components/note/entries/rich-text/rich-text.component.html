@@ -8,7 +8,7 @@
       <mat-icon (click)="deleteThis()">delete</mat-icon>
     </div>
   </div>
-  <form *ngIf="editMode" [formGroup]="formGroup">
+  <form *ngIf="editMode" [formGroup]="form">
     <quill-editor formControlName="contents">
       <div quill-editor-toolbar>
         <select class="ql-size" [title]="'Size'">

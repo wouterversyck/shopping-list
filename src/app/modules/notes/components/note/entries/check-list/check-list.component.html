@@ -8,7 +8,7 @@
       <mat-icon (click)="deleteThis()">delete</mat-icon>
     </div>
   </div>
-  <form [formGroup]="formGroup" cdkDropList (cdkDropListDropped)="drop($event)">
+  <form [formGroup]="form" cdkDropList (cdkDropListDropped)="drop($event)">
     <div formArrayName="items"
          *ngFor="let item of formChecklistItems.controls; let i = index;">
       <div [formGroupName]="i" cdkDrag>

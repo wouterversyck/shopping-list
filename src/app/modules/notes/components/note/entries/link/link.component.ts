@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { LinkPreviewService } from '@app/modules/notes/services/link-preview/link-preview.service';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NoteEntry } from '@app/modules/notes/components/note/note-entry.interface';
 import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -14,7 +14,6 @@ import { LoaderService } from '@core/services/loader/loader.service';
 })
 export class LinkComponent implements OnInit, NoteEntry {
   @Input() entry: LinkPreview;
-  @Input() parentFormArray: FormArray;
   @Output() deleted = new EventEmitter<any>();
   @Output() movedUp = new EventEmitter<NoteEntry>();
   @Output() movedDown = new EventEmitter<NoteEntry>();
@@ -22,26 +21,28 @@ export class LinkComponent implements OnInit, NoteEntry {
   urlRegex = 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)';
 
   linkPreview: Observable<LinkPreview>;
-  formGroup: FormGroup;
+  form: FormGroup;
 
   constructor(
     private linkPreviewService: LinkPreviewService,
     private formBuilder: FormBuilder,
     private loaderService: LoaderService) { }
 
-  ngOnInit(): void {
-    this.formGroup = this.formBuilder.group(this.entry);
-    this.parentFormArray.push(this.formGroup);
+  createForm(): FormGroup {
+    return this.form = this.formBuilder.group(this.entry);
+  }
 
-    this.linkPreview = this.formGroup.controls.url.valueChanges
+  ngOnInit(): void {
+
+    this.linkPreview = this.form.controls.url.valueChanges
      .pipe(
        debounceTime(1500),
        distinctUntilChanged(),
-       map(e => e.match('^https?://') ? e : 'https://' + e),
+       map(e => e.match('^https?://') ? e : `https://${e}`),
        filter(value => value.match(this.urlRegex)),
        tap(() => this.loaderService.show()),
        switchMap(e => this.linkPreviewService.getLinkPreview(e)),
-       tap((val) => this.formGroup.patchValue(val)),
+       tap((val) => this.form.patchValue(val)),
        tap(() => this.loaderService.hide())
      )
       .pipe(

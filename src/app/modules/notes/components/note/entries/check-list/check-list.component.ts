@@ -23,25 +23,26 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class CheckListComponent implements OnInit, AfterViewChecked, NoteEntry {
   @Input() entry: CheckList;
-  @Input() parentFormArray: FormArray;
   @Output() deleted = new EventEmitter<any>();
   @Output() movedUp = new EventEmitter<NoteEntry>();
   @Output() movedDown = new EventEmitter<NoteEntry>();
 
   @ViewChildren('input') inputs: QueryList<ElementRef>;
-  formGroup: FormGroup;
+  form: FormGroup;
 
   itemAdded = false;
 
   constructor(private formBuilder: FormBuilder) { }
 
-  ngOnInit(): void {
-    this.formGroup = this.formBuilder.group({
+  createForm(): FormGroup {
+    return this.form = this.formBuilder.group({
       entryType: this.entry.entryType,
       name: this.entry.name,
       items: this.formBuilder.array(this.entry.items.map(e => this.formBuilder.group(e)))
     });
-    this.parentFormArray.push(this.formGroup);
+  }
+
+  ngOnInit(): void {
   }
 
   addItem() {
@@ -73,7 +74,7 @@ export class CheckListComponent implements OnInit, AfterViewChecked, NoteEntry {
   }
 
   get formChecklistItems(): FormArray {
-    return this.formGroup.controls.items as FormArray;
+    return this.form.controls.items as FormArray;
   }
 
   ngAfterViewChecked(): void {
