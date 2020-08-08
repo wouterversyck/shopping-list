@@ -14,6 +14,8 @@ import { QuillModule } from 'ngx-quill';
 import { EditNoteComponent } from './pages/edit-note/edit-note.component';
 import { LinkComponent } from './components/note/entries/link/link.component';
 import { LinkPreviewService } from './services/link-preview/link-preview.service';
+import { NgxIndexedDBModule } from 'ngx-indexed-db';
+import dbConfig from './indexed-db.config';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { LinkPreviewService } from './services/link-preview/link-preview.service
     MaterialModule,
     ReactiveFormsModule,
     SharedModule,
-    QuillModule
+    QuillModule,
+    NgxIndexedDBModule.forRoot(dbConfig)
   ],
   providers: [NotesService, LinkPreviewService]
 })

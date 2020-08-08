@@ -20,9 +20,9 @@ export class ListComponent implements OnInit {
     this.getAllNotes();
   }
 
-  deleteNote(event: MouseEvent, id: string) {
+  deleteNote(event: MouseEvent, id: string, isLocal: boolean) {
     event.stopPropagation();
-    this.notesService.delete(id)
+    this.notesService.delete(id, isLocal)
       .subscribe(this.getAllNotes);
   }
 

@@ -13,11 +13,7 @@ const routes: Routes = [
     path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule)
   },
   {
-    path: 'list', loadChildren: () => import('./modules/notes/notes.module').then(m => m.NotesModule),
-    canActivate: [LoginGuard],
-    data: {
-      authGuardRedirect: '/login'
-    }
+    path: 'list', loadChildren: () => import('./modules/notes/notes.module').then(m => m.NotesModule)
   },
   {
     path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),

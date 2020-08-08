@@ -5,6 +5,7 @@ import { MaterialModule } from '@app/modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { AppModule } from '@app/app.module';
 import { NotesService } from '@app/modules/notes/services/notes/notes.service';
+import { of } from 'rxjs';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -22,7 +23,7 @@ describe('ListComponent', () => {
         MaterialModule
       ],
       providers: [
-        NotesService
+        { provide: NotesService, useValue: { getAll: () => of([])} }
       ]
     })
     .compileComponents();

@@ -7,13 +7,16 @@
         <h1>Marcus</h1>
       </div>
       <span class="fill-remaining-space"></span>
-      <mat-icon class="menu_trigger" [matMenuTriggerFor]="menu" *ngIf="isLoggedIn">account_circle</mat-icon>
+      <mat-icon class="menu_trigger" [matMenuTriggerFor]="menu">account_circle</mat-icon>
       <mat-menu #menu="matMenu">
-        <button class="btn_logout" mat-menu-item (click)="logout()">
+        <button *ngIf="isLoggedIn" class="btn_logout" mat-menu-item (click)="logout()">
           <mat-icon>exit_to_app</mat-icon>
         </button>
+        <button *ngIf="!isLoggedIn" class="btn_logout" mat-menu-item routerLink="login">
+          <mat-icon>login</mat-icon>
+        </button>
         <mat-divider></mat-divider>
-        <button mat-menu-item>Edit profile</button>
+        <button *ngIf="isLoggedIn" mat-menu-item >Edit profile</button>
         <span mat-menu-item>
           <mat-slide-toggle  color="accent" (change)="toggleTheme()" [checked]="isDarTheme">Dark theme</mat-slide-toggle>
         </span>

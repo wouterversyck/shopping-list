@@ -73,7 +73,8 @@ export class NoteComponent implements OnInit, OnDestroy {
 
   addItemToViewAndSyncServer(type: EntryType) {
       const entry = new (this.entryMap.get(type).entry)();
-      this.addEntry(entry);
+      const form = this.addEntry(entry);
+      this.formItems.push(form);
   }
 
   private constructForm(forms: FormArray) {

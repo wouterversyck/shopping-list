@@ -12,6 +12,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class EditNoteComponent implements OnInit {
   note: Note;
+
   constructor(
     private notesService: NotesService,
     private route: ActivatedRoute,
@@ -20,7 +21,9 @@ export class EditNoteComponent implements OnInit {
   ngOnInit(): void {
     this.loaderService.show();
     const id = this.route.snapshot.paramMap.get('id');
-    this.notesService.get(id)
+    const local = this.route.snapshot.paramMap.get('local') === 'true';
+
+    this.notesService.get(id, local)
       .pipe(
         finalize(() => this.loaderService.hide())
       )

@@ -6,4 +6,5 @@ export class Note {
   items: Entry[] = [];
   contributors: number[] = [];
   owner: number;
+  isLocal: boolean;
 }

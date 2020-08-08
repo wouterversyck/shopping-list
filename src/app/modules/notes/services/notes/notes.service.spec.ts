@@ -4,11 +4,17 @@ import { NotesService } from './notes.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Note } from '@app/modules/notes/models/note.model';
 import { RichText } from '@app/modules/notes/models/rich-text.model';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { NetworkStatusService } from '@core/services/network-status/network-status.service';
+import { AuthenticationService } from '@core/services/authentication/authentication.service';
 
 describe('NotesService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
-      NotesService
+      NotesService,
+      { provide: NgxIndexedDBService, useValue: { } },
+      { provide: AuthenticationService, useValue: { isLoggedIn: () => true } },
+      { provide: NetworkStatusService, useValue: { isOnline: true} }
     ],
     imports: [
       HttpClientTestingModule
@@ -28,6 +34,7 @@ describe('NotesService', () => {
         name: 'NAME',
         contributors: [1],
         owner: 1,
+        isLocal: false,
         items: [new RichText()]
       }];
 

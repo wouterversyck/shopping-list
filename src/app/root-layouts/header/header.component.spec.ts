@@ -67,7 +67,7 @@ describe('HeaderComponent', () => {
       component.logout();
 
       expect(authService.logout).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['login']);
+      expect(router.navigate).toHaveBeenCalledWith(['']);
     })
   );
 });
