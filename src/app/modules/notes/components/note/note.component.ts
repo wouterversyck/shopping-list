@@ -109,12 +109,12 @@ export class NoteComponent implements OnInit, OnDestroy {
   private wireFormToService(): void {
     this.subs.push(this.form.valueChanges
       .pipe(
-        tap(() => this.dirty = true),
         debounceTime(500),
         map(e => {
           e.contributors = e.contributors.map(d => d.id);
           return e;
         }),
+        tap(() => this.dirty = true),
         switchMap(this.notesService.save),
         tap(() => this.dirty = false)
       ).subscribe());
