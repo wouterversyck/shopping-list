@@ -14,3 +14,13 @@
   right: 40px;
   z-index: 100;
 }
+
+.sync-indicator {
+  position: fixed;
+  top: 40px;
+  right: 30px;
+  height: 25px; width: 25px;
+  background: rgba(50, 50, 50, 0.9);
+  border-radius: 60px;
+  padding: 0.7em 0.8em;
+}

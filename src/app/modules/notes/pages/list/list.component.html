@@ -2,7 +2,7 @@
   <div class="card" *ngFor="let n of notes" routerLink="{{n.id}}">
     <mat-icon (click)="deleteNote($event, n.id)">delete</mat-icon>
     <div class="note-overlay"></div>
-    <app-note [note]="n"></app-note>
+    <app-note [editMode]="true" [note]="n"></app-note>
   </div>
   <button mat-fab (click)="addNote()" class="float mat-elevation-z15" color="primary">
     <mat-icon aria-label="add note">add</mat-icon>
