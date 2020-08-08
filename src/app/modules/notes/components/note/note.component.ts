@@ -67,13 +67,13 @@ export class NoteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const forms = this.constructDynamicComponents();
-    this.constructForm(new FormArray(forms));
+    this.constructForm(this.formBuilder.array(forms));
     this.wireFormToService();
   }
 
   addItemToViewAndSyncServer(type: EntryType) {
       const entry = new (this.entryMap.get(type).entry)();
-      this.addEntry(entry);
+      this.formItems.push(this.addEntry(entry));
   }
 
   private constructForm(forms: FormArray) {
@@ -120,7 +120,7 @@ export class NoteComponent implements OnInit, OnDestroy {
     const component = componentRef.instance as NoteEntry;
 
     component.entry = entry;
-    this.subs.push(component.deleted.subscribe(e => this.delete(e)));
+    this.subs.push(component.deleted.subscribe(_ => this.delete(componentRef.hostView)));
     this.subs.push(component.movedDown.subscribe(_ => this.moveComponentDown(componentRef.hostView)));
     this.subs.push(component.movedUp.subscribe(_ => this.moveComponentUp(componentRef.hostView)));
 
@@ -158,8 +158,8 @@ export class NoteComponent implements OnInit, OnDestroy {
     this.formItems.insert(newIndex, formItem);
   }
 
-  private delete(component: any) {
-    const index = this.formItems.controls.indexOf(component.formGroup);
+  private delete(hostView: ViewRef) {
+    const index = this.adHost.viewContainerRef.indexOf(hostView);
     this.adHost.viewContainerRef.remove(index);
     this.formItems.removeAt(index);
   }
