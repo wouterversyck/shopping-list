@@ -35,7 +35,7 @@ describe('NotesService', () => {
         expect(response).toEqual(data);
       });
 
-      const req = httpMock.expectOne('api/shoppinglist');
+      const req = httpMock.expectOne('api/notes');
       expect(req.request.method).toEqual('GET');
       // Then we set the fake data to be returned by the mock
       req.flush(data);

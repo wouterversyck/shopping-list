@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class NotesService {
-  private NOTES_URL = 'api/shoppinglist';
+  private NOTES_URL = 'api/notes';
 
   constructor(private httpClient: HttpClient) { }
 
