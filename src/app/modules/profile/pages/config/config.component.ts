@@ -18,7 +18,9 @@ export class ConfigComponent implements OnInit {
     private snackBar: SnackBarService) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group(this.configService.getConfig());
+    const initialFormVal: any = this.configService.getConfig();
+    initialFormVal.theme = initialFormVal.theme === Theme.dark;
+    this.form = this.formBuilder.group(initialFormVal);
 
     this.form.valueChanges
       .pipe(
