@@ -1,9 +1,11 @@
 <div class="page-wrapper">
   <h2>Edit profile</h2>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form">
     <div class="toggle-container">
       <mat-slide-toggle color="accent" formControlName="autoGoogleLogin">Auto Login with Google</mat-slide-toggle>
     </div>
-    <button mat-button mat-raised-button type="submit">Save</button>
+    <div class="toggle-container">
+      <mat-slide-toggle  color="accent" formControlName="theme">Dark theme</mat-slide-toggle>
+    </div>
   </form>
 </div>
