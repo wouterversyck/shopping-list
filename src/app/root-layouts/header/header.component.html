@@ -13,7 +13,7 @@
           <mat-icon>exit_to_app</mat-icon>
         </button>
         <mat-divider></mat-divider>
-        <button mat-menu-item>Edit profile</button>
+        <button mat-menu-item [routerLink]="'/profile/config'">Edit profile</button>
         <span mat-menu-item>
           <mat-slide-toggle  color="accent" (change)="toggleTheme()" [checked]="isDarTheme">Dark theme</mat-slide-toggle>
         </span>

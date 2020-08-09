@@ -5,6 +5,7 @@ import { AuthenticationService } from '@core/services/authentication/authenticat
 import { SnackBarService } from '@core/services/snack-bar/snack-bar.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { ConfigService } from '@core/services/config/config.service';
 
 @Component({
   selector: 'app-social-login',
@@ -21,6 +22,7 @@ export class SocialLoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private authenticationService: AuthenticationService,
     private snackBar: SnackBarService,
+    private configService: ConfigService,
     private router: Router) { }
 
   ngOnDestroy(): void {
@@ -28,7 +30,15 @@ export class SocialLoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.socialLoginSub = this.authService.authState.subscribe(result => this.userSubject.next(result));
+    this.socialLoginSub = this.authService
+      .authState
+      .subscribe(result => {
+        if (this.configService.getConfig().autoGoogleLogin) {
+          this.autoLogin(result);
+        } else {
+          this.userSubject.next(result);
+        }
+      });
   }
 
   signInWithGoogle(): void {
@@ -36,18 +46,22 @@ export class SocialLoginComponent implements OnInit, OnDestroy {
       .then((user: SocialUser) => this.loginOnApiWithGoogleToken(user.idToken));
   }
 
-  continueLoginWithUser() {
+  continueLoginWithUser(): void {
     this.loginOnApiWithGoogleToken(this.userSubject.getValue().idToken);
   }
 
-  private loginOnApiWithGoogleToken(idToken: string) {
+  autoLogin(user: SocialUser) {
+    this.loginOnApiWithGoogleToken(user.idToken);
+  }
+
+  private loginOnApiWithGoogleToken(idToken: string): void {
     this.authenticationService.signInWithGoogle(idToken)
       .subscribe(
         response => this.router.navigate(['/']),
         (error: HttpErrorResponse) => this.handleOauthError(error));
   }
 
-  private handleOauthError(error: HttpErrorResponse) {
+  private handleOauthError(error: HttpErrorResponse): void {
     if (error.status === 404) {
       this.snackBar.showMessage('User not found, please first activate an account');
       return;

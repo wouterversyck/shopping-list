@@ -9,19 +9,11 @@ export class NotesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll = () => {
-    return this.httpClient.get<Note[]>(this.NOTES_URL);
-  }
+  getAll = () => this.httpClient.get<Note[]>(this.NOTES_URL);
 
-  get = (id: string) => {
-    return this.httpClient.get<Note>(`${this.NOTES_URL}/${id}`);
-  }
+  get = (id: string) => this.httpClient.get<Note>(`${this.NOTES_URL}/${id}`);
 
-  save = (note: Note): Observable<Note> => {
-    return this.httpClient.post<Note>(this.NOTES_URL, note);
-  }
+  save = (note: Note): Observable<Note> => this.httpClient.post<Note>(this.NOTES_URL, note);
 
-  delete = (id: string) => {
-    return this.httpClient.delete(`${this.NOTES_URL}/${id}`);
-  }
+  delete = (id: string) => this.httpClient.delete(`${this.NOTES_URL}/${id}`);
 }
