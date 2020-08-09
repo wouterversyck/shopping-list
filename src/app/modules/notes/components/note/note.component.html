@@ -5,6 +5,10 @@
         <input matInput formControlName="name">
       </mat-form-field>
     </h3>
+    <div *ngIf="!editMode" class="sync-indicator" [@showSyncIndicator]="dirty ? 'show' : 'hide'">
+      <mat-icon class="color-accent" *ngIf="!dirty">check</mat-icon>
+      <mat-icon class="color-warn" *ngIf="dirty">autorenew</mat-icon>
+    </div>
   </form>
   <div #list>
     <ng-template appAddHost></ng-template>

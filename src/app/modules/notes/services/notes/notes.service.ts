@@ -10,8 +10,8 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 
 @Injectable()
 export class NotesService {
-  private NOTES_URL = 'api/shoppinglist';
   private STORE_NAME = 'notes';
+  private NOTES_URL = 'api/notes';
 
   constructor(
     private httpClient: HttpClient,
